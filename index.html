@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Ittijah - Guide des Métiers et Orientation</title>
+    <meta name="description" content="Guide d'orientation scolaire pour les élèves marocains.">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- MODAL STATS -->
+    <div id="statsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn"
+                onclick="document.getElementById('statsModal').classList.remove('open')">&times;</span>
+            <div id="statsBody">Chargement...</div>
+        </div>
+    </div>
+
+    <!-- MODAL JOBS -->
+    <div id="jobModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="window.app.closeModal()">&times;</span>
+            <div id="modalBody">
+                <!-- Content injected by JS -->
+            </div>
+        </div>
+    </div>
+    <!-- MOBILE MENU OVERLAY -->
+    <div class="mobile-overlay" id="mobileOverlay" onclick="window.app.toggleMenu()"></div>
+
+    <!-- HEADER -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">Ittijah<span>Maroc</span></div>
+
+                <!-- Desktop Links -->
+                <div class="nav-links" id="navLinks">
+                    <button onclick="window.app.navigate('dashboard')">Accueil</button>
+                    <button onclick="window.app.navigate('jobs')">Métiers</button>
+                    <button onclick="window.app.navigate('comparator')">Comparateur</button>
+                    <!-- Added Button -->
+                    <button onclick="window.app.navigate('reservation')"
+                        style="color: var(--secondary); font-weight:700;">Réserver</button>
+
+                    <button onclick="window.location.href='métiers.html'">Par Branche</button>
+                    <button onclick="window.location.href='écoles/premier.html'">Écoles</button>
+                    <button onclick="window.app.logout()">Quitter</button>
+
+                    <!-- BOUTON THÈME DESKTOP MODERNE -->
+                    <div class="theme-toggle-wrapper">
+                        <button id="themeBtn" class="theme-toggle-btn" onclick="window.app.toggleTheme()"
+                            aria-label="Changer le thème">
+                            <!-- Moon Icon (Default) -->
+                            <svg class="icon-moon" viewBox="0 0 24 24">
+                                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                            </svg>
+                            <!-- Sun Icon (Dark Mode) -->
+                            <svg class="icon-sun" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="5"></circle>
+                                <line x1="12" y1="1" x2="12" y2="3"></line>
+                                <line x1="12" y1="21" x2="12" y2="23"></line>
+                                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                                <line x1="1" y1="12" x2="3" y2="12"></line>
+                                <line x1="21" y1="12" x2="23" y2="12"></line>
+                                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Mobile Burger -->
+                <button class="menu-toggle" onclick="window.app.toggleMenu()">
+                    <span></span><span></span><span></span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- MOBILE NAV DRAWER -->
+    <div class="mobile-nav" id="mobileNav">
+        <div style="margin-bottom: 20px; display:flex; justify-content:space-between; align-items:center;">
+            <strong style="font-size:1.2rem; color:var(--primary);">Menu</strong>
+
+            <!-- BOUTON THÈME MOBILE MODERNE -->
+            <div class="theme-toggle-wrapper">
+                <button id="themeBtnMobile" class="theme-toggle-btn" onclick="window.app.toggleTheme()"
+                    aria-label="Changer le thème" style="border:none; background:none;">
+                    <svg class="icon-moon" viewBox="0 0 24 24">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg class="icon-sun" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <button onclick="window.app.navigate('dashboard'); window.app.toggleMenu()">🏠 Accueil</button>
+        <button onclick="window.app.navigate('jobs'); window.app.toggleMenu()">💼 Métiers</button>
+        <button onclick="window.app.navigate('comparator'); window.app.toggleMenu()">⚖️ Comparateur</button>
+        <button onclick="window.app.showStats(); window.app.toggleMenu()" style="color:var(--accent);">📊
+            Statistiques</button>
+        <!-- Added Button -->
+        <button onclick="window.app.navigate('reservation'); window.app.toggleMenu()">📅 Réserver / Contact</button>
+
+        <button onclick="window.location.href='métiers.html'; window.app.toggleMenu()">📂 Par Branche</button>
+        <button onclick="window.location.href='écoles/premier.html'; window.app.toggleMenu()">🎓 Écoles</button>
+        <div style="flex:1"></div>
+        <button onclick="window.app.logout(); window.app.toggleMenu()" style="color:var(--danger)">🚪 Quitter</button>
+    </div>
+
+    <main class="container">
+
+        <!-- 0. AUTHENTICATION (New) -->
+        <section id="auth">
+            <div class="card" style="max-width: 400px; margin: 40px auto; text-align: center;">
+                <h2 class="section-title">Connexion</h2>
+                <div id="loginForm">
+                    <input type="email" id="loginEmail" placeholder="Email"
+                        style="width: 100%; margin-bottom: 10px; padding: 10px;">
+                    <input type="password" id="loginPassword" placeholder="Mot de passe"
+                        style="width: 100%; margin-bottom: 10px; padding: 10px;">
+                    <button class="btn btn-primary btn-block" onclick="window.app.login()">Se connecter</button>
+                    <p style="margin-top: 15px;">Pas encore de compte ? <a href="#"
+                            onclick="window.app.toggleAuth('register')">S'inscrire</a></p>
+                </div>
+
+                <div id="registerForm" style="display:none;">
+                    <input type="text" id="regName" placeholder="Nom complet"
+                        style="width: 100%; margin-bottom: 10px; padding: 10px;">
+                    <input type="email" id="regEmail" placeholder="Email"
+                        style="width: 100%; margin-bottom: 10px; padding: 10px;">
+
+                    <!-- NEW FIELDS -->
+                    <select id="regLevel"
+                        style="width: 100%; margin-bottom: 10px; padding: 10px; background:white; border:1px solid #ccc; border-radius:4px;">
+                        <option value="" disabled selected>Niveau Scolaire</option>
+                        <option value="3AC">3ème Année Collège</option>
+                        <option value="TC">Tronc Commun</option>
+                        <option value="1BAC">1ère Année Bac</option>
+                        <option value="2BAC">2ème Année Bac</option>
+                    </select>
+
+                    <select id="regStream"
+                        style="width: 100%; margin-bottom: 10px; padding: 10px; background:white; border:1px solid #ccc; border-radius:4px;">
+                        <option value="" disabled selected>Filière / Option</option>
+                        <optgroup label="Tronc Commun">
+                            <option value="TC_Sc">Tronc Commun Scientifique</option>
+                            <option value="TC_Lit">Tronc Commun Lettres</option>
+                        </optgroup>
+                        <optgroup label="Sciences Mathématiques">
+                            <option value="SMA">Sciences Mathématiques A</option>
+                            <option value="SMB">Sciences Mathématiques B</option>
+                        </optgroup>
+                        <optgroup label="Sciences Expérimentales">
+                            <option value="PC">Sciences Physiques</option>
+                            <option value="SVT">SVT</option>
+                            <option value="Sc_Agro">Sciences Agronomiques</option>
+                        </optgroup>
+                        <optgroup label="Sciences & Technologies">
+                            <option value="STE">Sc. et Technologies Électriques</option>
+                            <option value="STM">Sc. et Technologies Mécaniques</option>
+                        </optgroup>
+                        <optgroup label="Économie & Gestion">
+                            <option value="SEG">Sciences Économiques et Gestion</option>
+                        </optgroup>
+                        <optgroup label="Lettres & Sciences Humaines">
+                            <option value="LSH">Lettres et Sciences Humaines</option>
+                            <option value="SH">Sciences Humaines</option>
+                            <option value="Langue_Arabe">Langue Arabe</option>
+                            <option value="Sc_Chariaa">Sciences de la Chariâa</option>
+                            <option value="Arts">Arts Appliqués</option>
+                        </optgroup>
+                        <optgroup label="Professionnel">
+                            <option value="BacPro">Baccalauréat Professionnel</option>
+                        </optgroup>
+                        <option value="Autre">Autre</option>
+                    </select>
+
+                    <input type="password" id="regPassword" placeholder="Mot de passe"
+                        style="width: 100%; margin-bottom: 10px; padding: 10px;">
+                    <button class="btn btn-primary btn-block" onclick="window.app.register()">Créer un compte</button>
+                    <p style="margin-top: 15px;">Déjà un compte ? <a href="#"
+                            onclick="window.app.toggleAuth('login')">Se connecter</a></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ADMIN PANEL -->
+        <section id="admin">
+            <div class="card">
+                <h2 class="section-title">👑 Panneau Administrateur</h2>
+                <p style="margin-bottom: 20px;">Gestion des utilisateurs et statistiques</p>
+
+                <div style="margin-bottom: 20px;">
+                    <button class="btn btn-primary" onclick="window.app.loadAdminUsers()">🔄 Actualiser</button>
+                </div>
+
+                <div id="adminUsersTable" style="overflow-x: auto;">
+                    <p>Chargement...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 1. ONBOARDING -->
+        <section id="onboarding">
+            <div class="card"
+                style="max-width: 500px; margin: 40px auto; text-align: center; border-top: 5px solid var(--secondary);">
+                <div style="font-size: 3rem; margin-bottom: 10px;">👋</div>
+                <h2 class="section-title">Bienvenue sur Orient'Maroc</h2>
+                <p style="color: var(--text-muted); margin-bottom: 30px;">Ton guide personnel pour construire ton avenir
+                    au Maroc.</p>
+
+                <form onsubmit="window.app.saveProfile(event)">
+                    <div class="form-group">
+                        <label style="text-align:left">Ton Prénom</label>
+                        <input type="text" id="name" required placeholder="Ex: Sara">
+                    </div>
+
+                    <div class="form-group">
+                        <label style="text-align:left">Niveau Scolaire</label>
+                        <select id="level" required onchange="window.app.toggleStream()">
+                            <option value="">Choisir...</option>
+                            <option value="3AC">3ème Année Collège</option>
+                            <option value="TC">Tronc Commun</option>
+                            <option value="1BAC">1ère Année Bac</option>
+                            <option value="2BAC">2ème Année Bac</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" id="streamGroup" style="display:none;">
+                        <label style="text-align:left">Filière (Bac)</label>
+                        <select id="stream">
+                            <option value="">Aucune / Je ne sais pas</option>
+                            <option value="SC_Maths">Sciences Maths</option>
+                            <option value="SC_Exp">Sciences Expérimentales</option>
+                            <option value="STEG">Sciences Techniques (STEG)</option>
+                            <option value="EG">Économie & Gestion</option>
+                            <option value="SH">Sciences Humaines</option>
+                            <option value="LP">Lettres & Philo</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block">Commencer mon aventure 🚀</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- 2. DASHBOARD -->
+        <section id="dashboard">
+            <div class="card"
+                style="background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; border:none;">
+                <h1>Salut, <span id="uName">Élève</span> ! 👋</h1>
+                <p style="opacity: 0.95; margin-top: 10px; font-size: 1.1rem;">Prêt à découvrir ton avenir professionnel
+                    ?</p>
+                <div style="margin-top: 25px;">
+                    <button class="btn" style="background: white; color: var(--primary);"
+                        onclick="window.location.href='test/test.html'; window.app.toggleMenu()">✨ Passer le Test
+                        d'Orientation</button>
+                </div>
+            </div>
+
+            <div
+                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-bottom: 30px;">
+                <div class="stat-box">
+                    <span class="stat-val" id="totalJobsCount">0</span>
+                    <span class="stat-label">Métiers</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-val" id="totalCatsCount">0</span>
+                    <span class="stat-label">Secteurs</span>
+                </div>
+            </div>
+
+            <h3 class="section-title">💡 Suggestions du jour</h3>
+            <div class="job-grid" id="featuredJobs"></div>
+        </section>
+
+        <!-- 3. QUIZ -->
+        <section id="quiz">
+            <div class="card">
+                <div class="progress-container">
+                    <div
+                        style="display:flex; justify-content:space-between; margin-bottom:5px; font-size:0.85rem; font-weight:600; color:var(--text-muted);">
+                        <span>Progression</span>
+                        <span id="quizProgressText">0%</span>
+                    </div>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" id="quizProgress"></div>
+                    </div>
+                </div>
+                <h2 id="qText" style="margin-bottom: 25px; font-size: 1.3rem;">Question...</h2>
+                <div id="qOptions" class="options-grid"></div>
+            </div>
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="btn btn-outline" onclick="window.app.navigate('dashboard')">Annuler le test</button>
+            </div>
+        </section>
+
+        <!-- 4. RESULTS -->
+        <section id="results">
+            <div class="card" style="text-align: center; padding: 40px 20px;">
+                <div style="font-size: 3rem; margin-bottom: 10px;">🎯</div>
+                <h2 class="section-title">Analyse Terminée</h2>
+                <p>Ton profil détecté : <strong id="resProfile" style="color:var(--primary)"></strong></p>
+                <div id="resTags"
+                    style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; justify-content:center;"></div>
+            </div>
+
+            <div class="card">
+                <h3 class="section-title">💼 Métiers recommandés</h3>
+                <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px;">
+                    Basés sur ta filière (<span id="resStream"></span>) et tes réponses.
+                </p>
+                <div class="job-grid" id="resJobs"></div>
+            </div>
+
+            <div style="text-align: center;">
+                <button class="btn btn-primary" onclick="window.app.saveAndExit()">Enregistrer et Retourner à
+                    l'Accueil</button>
+            </div>
+        </section>
+
+        <!-- 5. JOBS DIRECTORY -->
+        <section id="jobs">
+            <div class="filter-bar">
+                <div style="flex:2; width:100%;">
+                    <input type="text" id="jobSearch" placeholder="🔍 Rechercher un métier, un mot-clé..."
+                        oninput="window.app.filterJobs(document.getElementById('categoryFilter').value)">
+                </div>
+                <div style="flex:1; width:100%;">
+                    <select id="categoryFilter" onchange="window.app.filterJobs(this.value)">
+                        <option value="all">Toutes les catégories</option>
+                    </select>
+                </div>
+                <div
+                    style="color: var(--text-muted); font-size: 0.9rem; font-weight:600; text-align:right; width:100%;">
+                    <span id="currentCount">0</span> métiers
+                </div>
+            </div>
+            <div class="job-grid" id="jobsList"></div>
+        </section>
+
+        <!-- 6. COMPARATOR SECTION -->
+        <section id="comparator">
+            <div class="card">
+                <h2 class="section-title">⚖️ Comparateur de Filières</h2>
+                <p style="margin-bottom: 25px; color: var(--text-muted);">Hésite entre deux voies ? Compare-les pour
+                    faire le bon choix.</p>
+
+                <div class="compare-controls">
+                    <div>
+                        <label>Voie 1</label>
+                        <select id="streamSelect1">
+                            <option value="">-- Sélectionner --</option>
+                            <option value="sc_maths">Sciences Maths</option>
+                            <option value="sc_exp">Sciences Expérimentales</option>
+                            <option value="eco">Économie & Gestion</option>
+                            <option value="lettres">Lettres & Philosophie</option>
+                            <option value="univ">Université (Littéraire/Sc Humaines)</option>
+                            <option value="ecoles">Écoles Supérieures</option>
+                            <option value="ofppt">OFPPT (Formation Pro)</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label>Voie 2</label>
+                        <select id="streamSelect2">
+                            <option value="">-- Sélectionner --</option>
+                            <option value="sc_maths">Sciences Maths</option>
+                            <option value="sc_exp">Sciences Expérimentales</option>
+                            <option value="eco">Économie & Gestion</option>
+                            <option value="lettres">Lettres & Philosophie</option>
+                            <option value="univ">Université (Littéraire/Sc Humaines)</option>
+                            <option value="ecoles">Écoles Supérieures</option>
+                            <option value="ofppt">OFPPT (Formation Pro)</option>
+                        </select>
+                    </div>
+
+                    <button class="btn btn-primary" onclick="window.app.comparator.runComparison()"
+                        style="height: 50px; margin-top:0;">Comparer</button>
+                </div>
+            </div>
+
+            <div id="compareResults" class="job-grid"></div>
+
+            <div
+                style="text-align: center; margin-top: 40px; padding: 20px; background:var(--bg-input); border-radius: var(--radius-md);">
+                <p style="margin-bottom: 15px; font-weight:600;">Indécis ? Passez notre test personnalisé.</p>
+                <button class="btn btn-outline" onclick="window.app.startQuiz()">Faire le test d'orientation</button>
+            </div>
+        </section>
+
+        <!-- 7. RESERVATION / CONTACT FORM (NEW) -->
+        <section id="reservation">
+            <div class="card" style="max-width: 600px; margin: 0 auto; border-top: 5px solid var(--accent);">
+                <div style="text-align:center; margin-bottom: 25px;">
+                    <div style="font-size: 3rem; margin-bottom: 10px;">📅</div>
+                    <h2 class="section-title">Réserver / Contact</h2>
+                    <p style="color: var(--text-muted);">Besoin d'un rendez-vous d'orientation ou d'une question ?
+                        Remplissez ce formulaire.</p>
+                </div>
+
+                <!-- Formspree Form Integrated Here -->
+                <form id="fs-form" action="https://formspree.io/f/xojloypv" method="POST">
+
+                    <div class="form-group">
+                        <label for="name">Votre Nom Complet</label>
+                        <input type="text" id="name" name="name" required placeholder="Ex: Souhail Belgounche">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Votre Email</label>
+                        <input type="email" id="email" name="email" required placeholder="Ex: souhail@example.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Téléphone (Optionnel)</label>
+                        <input type="tel" id="phone" name="phone" placeholder="Ex: 0661123456">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="subject">Sujet</label>
+                        <select id="subject" name="subject" required>
+                            <option value="Rendez-vous Orientation">📅 Rendez-vous Orientation</option>
+                            <option value="Question sur une filière">❓ Question sur une filière</option>
+                            <option value="Partenariat">🤝 Partenariat</option>
+                            <option value="Autre">💬 Autre</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Votre Message</label>
+                        <textarea id="message" name="message" rows="5" required
+                            placeholder="Dites-nous en plus sur votre besoin..."></textarea>
+                    </div>
+
+                    <button type="submit" id="submit-btn" class="btn btn-primary btn-block">Envoyer ma demande</button>
+
+                    <p style="text-align:center; font-size:0.8rem; margin-top:15px; color:var(--text-muted);">
+                        Vos données sont transmises de manière sécurisée.
+                    </p>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+
+    <!-- CHATBOT INTEGRATION -->
+    <script async type='module'
+        src='https://interfaces.zapier.com/assets/web-components/zapier-interfaces/zapier-interfaces.esm.js'></script>
+    <zapier-interfaces-chatbot-embed is-popup='true'
+        chatbot-id='cml6yl3ga000ciem38z0cx24k'></zapier-interfaces-chatbot-embed>
+
+</body>
+
+</html>

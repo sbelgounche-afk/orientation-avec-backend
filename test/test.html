@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bilan d'Orientation Complet</title>
+    <link rel="stylesheet" href="css.css">
+</head>
+
+<body>
+
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">Orient<span>IA</span> <small
+                        style="font-size: 0.8rem; font-weight: normal; color: #777;">v2</small></div>
+                <div class="nav-links">
+                    <button onclick="window.location.href='../index.html'" class="no-print"
+                        style="margin-right: 10px;">🏠 Retour Accueil</button>
+                    <button onclick="resetApp()" class="no-print">🔄 Recommencer</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <!-- Section 1: Introduction -->
+        <section id="intro" class="active">
+            <div class="card" style="text-align: center; padding: 40px;">
+                <h1 style="margin-bottom: 20px; color: var(--primary);">Votre Parcours d'Orientation</h1>
+                <p style="margin-bottom: 30px; font-size: 1.1rem; line-height: 1.6;">
+                    Analyse complète basée sur Holland, Super et Deci & Ryan.
+                    <br><small>Vos réponses sont sauvegardées automatiquement.</small>
+                </p>
+                <button class="btn btn-primary" onclick="startQuiz()">Commencer l'entretien</button>
+                <p id="savedMsg" style="margin-top:15px; color: var(--secondary); display:none;">Une session précédente
+                    a été trouvée.</p>
+            </div>
+        </section>
+
+        <!-- Section 2: Quiz -->
+        <section id="quiz">
+            <div class="card">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                    <button id="prevBtn" class="btn btn-outline"
+                        style="display:none; font-size:0.9rem; padding: 8px 16px;" onclick="prevStep()">←
+                        Précédent</button>
+                    <span style="color:#999; font-size:0.9rem;">Étape <span id="stepCount">1</span>/9</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <h2 id="questionTitle" style="margin-bottom: 20px;">Question</h2>
+                <div id="optionsContainer" class="options-grid">
+                    <!-- Options JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Sous-écran Blocage -->
+        <section id="q1-subscreen">
+            <div class="card">
+                <h2 style="margin-bottom: 15px; color: var(--accent-path);">Comprendre le blocage</h2>
+                <p style="margin-bottom: 20px;">Qu'est-ce qui te penses être la cause principale de ce sentiment ?</p>
+                <div class="options-grid">
+                    <button class="option-btn" onclick="handleSubAnswer('peur')"><span>La peur de l'échec ou du
+                            choix</span></button>
+                    <button class="option-btn" onclick="handleSubAnswer('pression')"><span>La pression familiale ou
+                            sociale</span></button>
+                    <button class="option-btn" onclick="handleSubAnswer('info')"><span>Le manque d'information sur les
+                            métiers</span></button>
+                </div>
+                <div style="margin-top: 15px; text-align: center;">
+                    <small style="cursor:pointer; color: var(--primary); text-decoration: underline;"
+                        onclick="prevStep()">Revenir à la question précédente</small>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Résultats -->
+        <section id="results">
+            <div class="card no-print" style="text-align: center; margin-bottom: 20px;">
+                <button class="btn btn-outline" onclick="window.print()">🖨️ Imprimer mon bilan</button>
+            </div>
+
+            <div class="card">
+                <h2 style="text-align: center; color: var(--primary);">Votre Profil</h2>
+
+                <!-- Graphique Radar -->
+                <div class="chart-container">
+                    <canvas id="radarChart"></canvas>
+                </div>
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <div id="riasecResult" style="font-size: 1.5rem; font-weight: bold; color: var(--secondary);">--
+                    </div>
+                </div>
+
+                <div class="stat-grid">
+                    <div class="stat-box">
+                        <div class="stat-val" id="learningResult">--</div>
+                        <div class="stat-label">Apprentissage</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-val" id="motivationResult">--</div>
+                        <div class="stat-label">Motivation</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-val" id="frameworkResult">--</div>
+                        <div class="stat-label">Cadre</div>
+                    </div>
+                </div>
+
+                <div id="finalRecommendation" class="recommendation-box">
+                    <div class="recommendation-title">💡 Recommandation</div>
+                    <p id="recommendationText">...</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="filter-container">
+                    <label style="margin-bottom:0;">🔍 Explorer les métiers :</label>
+                    <input type="text" id="searchInput"
+                        placeholder="Rechercher un métier (ex: Boulanger, Informatique...)">
+                </div>
+                <h3 style="margin-bottom: 15px; color: var(--primary);">Métiers Compatibles</h3>
+                <div id="jobContainer" class="job-grid">
+                    <!-- JS -->
+                </div>
+            </div>
+
+            <div class="disclaimer" style="text-align: center; font-size: 0.8rem; color: #888; margin-top: 30px;">
+                Ces résultats indiquent des environnements professionnels compatibles. Ils ne constituent pas un choix
+                définitif.
+            </div>
+        </section>
+
+    </main>
+
+    <!-- MODAL DETAILS -->
+    <div id="jobModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle" style="color: var(--primary); margin-bottom: 5px;">Titre</h2>
+            <div id="modalCategory"
+                style="color: var(--secondary); font-weight: bold; text-transform: uppercase; margin-bottom: 15px; font-size: 0.8rem;">
+                Catégorie</div>
+
+            <p id="modalDesc" style="line-height: 1.6; margin-bottom: 20px;">Description...</p>
+
+            <div style="background: #f9f9f9; padding: 15px; border-radius: 8px;">
+                <h4 style="margin-bottom: 10px; font-size: 0.9rem; color: #555;">Points de compatibilité avec vous :
+                </h4>
+                <div id="modalTags" style="display: flex; gap: 8px; flex-wrap: wrap;">
+                    <!-- Tags -->
+                </div>
+            </div>
+
+            <div style="margin-top: 20px; text-align: right;">
+                <button class="btn btn-primary" onclick="closeModal()">Fermer</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js.js"></script>
+    <!-- CHATBOT INTEGRATION -->
+    <script async type='module'
+        src='https://interfaces.zapier.com/assets/web-components/zapier-interfaces/zapier-interfaces.esm.js'></script>
+    <zapier-interfaces-chatbot-embed is-popup='true'
+        chatbot-id='cml6yl3ga000ciem38z0cx24k'></zapier-interfaces-chatbot-embed>
+
+</body>
+
+</html>

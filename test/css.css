@@ -1,0 +1,131 @@
+        /* --- CSS GLOBAL & VARIABLES de test.html --- */
+        :root {
+            --primary: #006064; /* Bleu Profond */
+            --secondary: #009688; /* Vert Émeraude */
+            --accent: #FFC107;
+            --accent-path: #E65100; /* Orange pour le bouton parcours */
+            --bg: #F4F7F6;
+            --text: #333;
+            --white: #ffffff;
+            --radius: 12px;
+            --shadow: 0 4px 15px rgba(0,0,0,0.08);
+            --transition: 0.3s ease;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 20px; width: 100%; }
+        
+        /* --- NAVBAR --- */
+        header { background: var(--white); box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 100; }
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; }
+        .logo { font-size: 1.4rem; font-weight: bold; color: var(--primary); display: flex; align-items: center; gap: 10px; }
+        .logo span { color: var(--secondary); }
+        .nav-links button { background: none; border: none; font-size: 1rem; cursor: pointer; color: #555; margin-left: 15px; font-weight: 500; }
+        .nav-links button:hover { color: var(--primary); }
+
+        /* --- COMPONENTS --- */
+        .card { background: var(--white); border-radius: var(--radius); padding: 24px; margin-bottom: 20px; box-shadow: var(--shadow); }
+        
+        .btn {
+            padding: 12px 24px; border: none; border-radius: 30px; cursor: pointer; font-weight: 600; font-size: 1rem; transition: var(--transition);
+            display: inline-flex; align-items: center; gap: 8px; justify-content: center;
+        }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover { background: #004d40; transform: translateY(-2px); }
+        .btn-outline { border: 2px solid var(--primary); background: transparent; color: var(--primary); }
+        .btn-outline:hover { background: var(--bg); }
+        .btn-path { background: var(--accent-path); color: white; width: 100%; margin-top: 15px; justify-content: center; }
+        .btn-path:hover { background: #bf360c; }
+
+        /* --- SECTIONS --- */
+        section { display: none; animation: fadeIn 0.4s ease-out; }
+        section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- FORM & INPUT --- */
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: 600; font-size: 0.9rem; color: #555; }
+        input, select {
+            width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem; background: #fafafa; transition: border-color 0.2s;
+        }
+        input:focus, select:focus { outline: none; border-color: var(--secondary); background: #fff; }
+
+        /* --- FILTERS --- */
+        .filter-container { margin-bottom: 20px; display: flex; align-items: center; gap: 15px; background: white; padding: 15px; border-radius: var(--radius); box-shadow: var(--shadow); }
+        #searchInput { flex: 1; }
+
+        /* --- JOB GRID --- */
+        .job-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+        .job-card {
+            background: white; border-radius: var(--radius); overflow: hidden; border: 1px solid #eee; transition: var(--transition);
+            display: flex; flex-direction: column; cursor: pointer; height: 100%; position: relative;
+        }
+        .job-card:hover { transform: translateY(-5px); box-shadow: var(--shadow); border-color: var(--secondary); }
+        .job-header { padding: 15px; background: linear-gradient(to right, #f0f7ff, #ffffff); border-bottom: 1px solid #eee; }
+        .job-title { font-weight: bold; color: var(--primary); font-size: 1.1rem; }
+        .job-category { font-size: 0.8rem; color: var(--secondary); text-transform: uppercase; font-weight: bold; letter-spacing: 0.5px; margin-top: 5px; display: inline-block; }
+        .job-body { padding: 15px; font-size: 0.95rem; color: #555; flex-grow: 1; }
+        .job-footer { padding: 10px 15px; background: #fafafa; border-top: 1px solid #eee; font-size: 0.85rem; color: #888; display: flex; justify-content: space-between; align-items: center; }
+        
+        .match-tag { background: var(--secondary); color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; }
+        .explore-tag { background: var(--accent); color: #333; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; }
+
+        /* --- QUIZ --- */
+        .progress-bar { height: 6px; background: #e0e0e0; border-radius: 3px; margin-bottom: 20px; }
+        .progress-fill { height: 100%; background: var(--secondary); border-radius: 3px; width: 0%; transition: width 0.3s; }
+        .options-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+        @media(min-width: 600px) { .options-grid { grid-template-columns: 1fr 1fr; } }
+        
+        .option-btn {
+            background: white; border: 2px solid #eee; padding: 15px; border-radius: 8px; text-align: left; transition: var(--transition); cursor: pointer; display: flex; align-items: center; gap: 10px;
+        }
+        .option-btn:hover { border-color: var(--secondary); background: #f0fdfa; }
+
+        /* --- MODAL --- */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; justify-content: center; align-items: center; padding: 20px; }
+        .modal.open { display: flex; }
+        .modal-content { background: white; width: 100%; max-width: 600px; max-height: 85vh; overflow-y: auto; border-radius: var(--radius); padding: 30px; position: relative; animation: slideUp 0.3s ease; }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .close-modal { position: absolute; top: 15px; right: 20px; font-size: 28px; cursor: pointer; color: #999; transition: 0.2s; }
+        .close-modal:hover { color: var(--accent-path); }
+
+        /* --- RADAR CHART --- */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto 20px auto;
+        }
+        canvas { width: 100% !important; height: auto !important; }
+
+        /* --- RECOMMENDATION --- */
+        .recommendation-box {
+            background-color: #e0f2f1; border: 1px solid var(--secondary); border-radius: var(--radius); padding: 20px; margin-top: 20px;
+        }
+        .recommendation-title { color: var(--primary); font-weight: bold; margin-bottom: 10px; font-size: 1.2rem; display: flex; align-items: center; gap: 10px; }
+
+        /* --- STATS --- */
+        .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-bottom: 20px; }
+        .stat-box { background: #f9f9f9; padding: 15px; border-radius: 8px; text-align: center; border: 1px solid #eee; }
+        .stat-val { font-size: 1.2rem; font-weight: bold; color: var(--primary); }
+        .stat-label { font-size: 0.8rem; color: #777; text-transform: uppercase; }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 600px) {
+            .filter-container { flex-direction: column; align-items: stretch; }
+            .job-grid { grid-template-columns: 1fr; }
+            h1 { font-size: 1.5rem; }
+            .modal-content { width: 95%; padding: 20px; }
+        }
+
+        /* --- PRINT --- */
+        @media print {
+            header, #intro, #quiz, .no-print { display: none !important; }
+            #results { display: block !important; }
+            .container { max-width: 100%; padding: 0; }
+            .card { box-shadow: none; border: 1px solid #ccc; break-inside: avoid; }
+            body { background: white; color: black; }
+            .btn { border: 1px solid #ccc; color: black; background: white; }
+        }

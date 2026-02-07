@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avis & Orientation : Université Cadi Ayyad (UCA)</title>
+    <!-- Importation de polices Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Importation d'icônes (FontAwesome CDN pour la démonstration) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- VARIABLES CSS --- */
+        :root {
+            --primary-color: #1e3a8a; /* Bleu académique profond */
+            --primary-light: #3b82f6;
+            --accent-color: #d97706; /* Orange Marrakech/Soleil */
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --bg-light: #f9fafb;
+            --white: #ffffff;
+            --success: #10b981;
+            --danger: #ef4444;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --radius: 12px;
+            --container-width: 1100px;
+        }
+
+        /* --- RESET & BASE --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: var(--text-dark);
+            line-height: 1.6;
+            background-color: var(--bg-light);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--primary-color);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: color 0.3s ease;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        /* --- UTILITIES --- */
+        .container {
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-padding {
+            padding: 80px 0;
+        }
+
+        .text-center { text-align: center; }
+        .text-accent { color: var(--accent-color); }
+        .mb-1 { margin-bottom: 1rem; }
+        .mb-2 { margin-bottom: 2rem; }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            background-color: transparent;
+            color: var(--primary-color);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--white);
+            border: 2px solid var(--white);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--white);
+            color: var(--primary-color);
+        }
+
+        /* --- HEADER --- */
+        header {
+            background-color: var(--white);
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-light);
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            background: linear-gradient(rgba(30, 58, 138, 0.85), rgba(30, 58, 138, 0.7)), 
+                        url('https://picsum.photos/seed/uca_marrakech/1920/1080.jpg') no-repeat center center/cover;
+            height: 80vh;
+            min-height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            text-align: center;
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            color: var(--white);
+            margin-bottom: 1rem;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem auto;
+            opacity: 0.9;
+        }
+
+        /* --- SECTIONS GENERAL --- */
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background-color: var(--accent-color);
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        /* --- PRESENTATION --- */
+        .presentation-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .pres-text ul {
+            margin-top: 20px;
+        }
+
+        .pres-text li {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .pres-text i {
+            color: var(--primary-light);
+            margin-top: 4px;
+        }
+
+        .pres-img img {
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* --- REPUTATION --- */
+        #reputation {
+            background-color: var(--white);
+        }
+
+        .reputation-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .rank-card {
+            background: var(--bg-light);
+            padding: 30px;
+            border-radius: var(--radius);
+            text-align: center;
+            border: 1px solid #e5e7eb;
+            transition: transform 0.3s;
+        }
+
+        .rank-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .rank-icon {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            margin-bottom: 15px;
+        }
+
+        .rank-stat {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        /* --- PROS & CONS --- */
+        .comparison-wrapper {
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .comp-column {
+            flex: 1;
+            min-width: 300px;
+            background: var(--white);
+            padding: 40px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+        }
+
+        .comp-column.pros {
+            border-top: 5px solid var(--success);
+        }
+
+        .comp-column.cons {
+            border-top: 5px solid var(--danger);
+        }
+
+        .comp-title {
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .pros .comp-title { color: var(--success); }
+        .cons .comp-title { color: var(--danger); }
+
+        .comp-list li {
+            margin-bottom: 20px;
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .comp-list li::before {
+            content: '\f00c'; /* FontAwesome check */
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            top: 2px;
+        }
+
+        .pros .comp-list li::before { color: var(--success); }
+        .cons .comp-list li::before { 
+            content: '\f00d'; /* FontAwesome times */
+            color: var(--danger); 
+        }
+
+        /* --- SUMMARY (VERDICT) --- */
+        #summary {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+        
+        #summary h2 { color: var(--white); }
+        #summary .section-title::after { background-color: var(--white); }
+
+        .verdict-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .verdict-box {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            padding: 30px;
+            border-radius: var(--radius);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .verdict-box h3 {
+            color: var(--white);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .verdict-list li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .verdict-list i {
+            font-size: 0.9rem;
+        }
+
+        /* --- CONTACT --- */
+        #contact {
+            background-color: var(--bg-light);
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 40px;
+            background: var(--white);
+            padding: 40px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+        }
+
+        .contact-info-box h3 {
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(30, 58, 138, 0.1);
+            color: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .contact-details h4 {
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+        
+        .contact-details p, .contact-details a {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        .contact-details a:hover {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: #111827;
+            color: #9ca3af;
+            padding: 40px 0;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 2rem; }
+            
+            .presentation-grid, 
+            .comparison-wrapper, 
+            .verdict-grid, 
+            .contact-container {
+                grid-template-columns: 1fr;
+                flex-direction: column;
+            }
+
+            .nav-links {
+                display: none; /* Simplification pour mobile : normalement on ajoute un burger menu */
+            }
+            
+            /* Un menu simple pour mobile en remplacement */
+            .mobile-nav-hint {
+                display: block;
+                font-size: 0.8rem;
+                color: #6b7280;
+                text-align: center;
+                padding: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <i class="fa-solid fa-graduation-cap"></i> Guide UCA
+                </div>
+                <div class="nav-links">
+                    <a href="#presentation">Présentation</a>
+                    <a href="#reputation">Classements</a>
+                    <a href="#pros-cons">Avis détaillé</a>
+                    <a href="#summary">Pour qui ?</a>
+                    <a href="#contact">Contact</a>
+                </div>
+            </nav>
+            <div class="mobile-nav-hint">Faites défiler pour naviguer</div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container hero-content">
+            <h1>Université Cadi Ayyad</h1>
+            <p>Le guide complet pour vous aider dans votre orientation. Découvrez les points forts, les classements et la réalité sur le terrain à Marrakech.</p>
+            <div class="cta-group">
+                <a href="#presentation" class="btn btn-primary">Découvrir l'université</a>
+                <a href="#contact" class="btn btn-outline">Contacter l'UCA</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Présentation Générale -->
+    <section id="presentation" class="section-padding">
+        <div class="container">
+            <h2 class="section-title">Présentation Générale</h2>
+            <div class="presentation-grid">
+                <div class="pres-text">
+                    <h3>Une institution majeure au Maroc</h3>
+                    <p class="mb-1">L’Université Cadi Ayyad (UCA) est une université publique importante située à Marrakech. Créée en 1978, elle a connu une croissance constante pour devenir un pôle d'excellence.</p>
+                    <p>Elle fédère aujourd’hui <strong>15 établissements universitaires</strong> répartis dans la région Marrakech-Safi : Marrakech, Safi, Essaouira et El Kelaâ des Sraghna.</p>
+                    
+                    <ul>
+                        <li>
+                            <i class="fa-solid fa-circle-check"></i>
+                            <div>
+                                <strong>Offre large :</strong> Licences, Masters, Doctorats et formation continue.
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-circle-check"></i>
+                            <div>
+                                <strong>Programmes adaptés :</strong> Cursus conçus pour répondre aux besoins du marché du travail.
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-location-dot"></i>
+                            <div>
+                                <strong>Multi-sites :</strong> Une présence dynamique sur plusieurs villes de la région.
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="pres-img">
+                    <img src="https://picsum.photos/seed/marrakech_uni/600/400.jpg" alt="Campus universitaire à Marrakech">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Réputation & Classements -->
+    <section id="reputation" class="section-padding">
+        <div class="container">
+            <h2 class="section-title">Réputation Académique</h2>
+            <p class="text-center" style="max-width: 800px; margin: 0 auto 30px auto;">
+                L’UCA se distingue dans plusieurs classements mondiaux grâce à la qualité de son enseignement et de sa recherche scientifique.
+            </p>
+
+            <div class="reputation-cards">
+                <!-- Card 1 -->
+                <article class="rank-card">
+                    <div class="rank-icon"><i class="fa-solid fa-globe"></i></div>
+                    <span class="rank-stat">Top 5,3 %</span>
+                    <h4>Classement CWUR 2025</h4>
+                    <p>Reconnue parmi les meilleures universités mondiales.</p>
+                </article>
+
+                <!-- Card 2 -->
+                <article class="rank-card">
+                    <div class="rank-icon"><i class="fa-solid fa-flask"></i></div>
+                    <span class="rank-stat">Nature Index</span>
+                    <h4>Excellence Recherche</h4>
+                    <p>Forte performance scientifique et publications de haut niveau.</p>
+                </article>
+
+                <!-- Card 3 -->
+                <article class="rank-card">
+                    <div class="rank-icon"><i class="fa-solid fa-certificate"></i></div>
+                    <span class="rank-stat">Top Afrique</span>
+                    <h4>Rayonnement International</h4>
+                    <p>Bien classée parmi les universités marocaines et africaines.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Points Forts / Points Faibles -->
+    <section id="pros-cons" class="section-padding">
+        <div class="container">
+            <h2 class="section-title">Le Bilan : Forts & Faibles</h2>
+            <div class="comparison-wrapper">
+                
+                <!-- Points Forts -->
+                <article class="comp-column pros">
+                    <h3 class="comp-title"><i class="fa-solid fa-thumbs-up"></i> Points Forts</h3>
+                    <ul class="comp-list">
+                        <li>
+                            <strong>Offre variée et adaptée :</strong> Large gamme de disciplines (sciences, droit, médecine, lettres, ingénierie) avec des filières professionnelles.
+                        </li>
+                        <li>
+                            <strong>Vie universitaire dynamique :</strong> Présence active de clubs, d'activités culturelles et sportives.
+                        </li>
+                        <li>
+                            <strong>Recherche forte :</strong> Nombreux laboratoires et structures de recherche performants.
+                        </li>
+                        <li>
+                            <strong>Internationalisation :</strong> Services dédiés aux étudiants internationaux et programmes de mobilité.
+                        </li>
+                        <li>
+                            <strong>Formation continue :</strong> Opportunités pour les professionnels déjà en activité.
+                        </li>
+                    </ul>
+                </article>
+
+                <!-- Points Faibles -->
+                <article class="comp-column cons">
+                    <h3 class="comp-title"><i class="fa-solid fa-triangle-exclamation"></i> Limites à connaître</h3>
+                    <ul class="comp-list">
+                        <li>
+                            <strong>Effectifs élevés :</strong> Plus de 120 000 étudiants. Cela implique souvent des amphis très chargés.
+                        </li>
+                        <li>
+                            <strong>Moindre individualisation :</strong> Le suivi personnalisé peut être difficile en raison du grand nombre d'étudiants.
+                        </li>
+                        <li>
+                            <strong>Variabilité des facultés :</strong> L'expérience (encadrement, organisation) peut beaucoup varier d'un établissement à l'autre.
+                        </li>
+                        <li>
+                            <strong>Programmes parfois datés :</strong> Certains retours signalent des cours moins modernes, un défi commun des grandes universités publiques.
+                        </li>
+                    </ul>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Résumé / Verdict -->
+    <section id="summary" class="section-padding">
+        <div class="container">
+            <h2 class="section-title">Pour qui est cette université ?</h2>
+            
+            <div class="verdict-grid">
+                <!-- Pour -->
+                <div class="verdict-box">
+                    <h3><i class="fa-solid fa-check-circle" style="color: #4ade80;"></i> Bonne option si...</h3>
+                    <ul class="verdict-list">
+                        <li><i class="fa-solid fa-check"></i> Tu veux une université publique reconnue au Maroc et à l’international.</li>
+                        <li><i class="fa-solid fa-check"></i> Tu souhaites une offre de formation très large couvrant plusieurs domaines.</li>
+                        <li><i class="fa-solid fa-check"></i> Tu es prêt(e) à t’investir dans tes études (discipline et autonomie souvent nécessaires).</li>
+                    </ul>
+                </div>
+
+                <!-- Contre -->
+                <div class="verdict-box">
+                    <h3><i class="fa-solid fa-times-circle" style="color: #f87171;"></i> Moins adaptée si...</h3>
+                    <ul class="verdict-list">
+                        <li><i class="fa-solid fa-times"></i> Tu préfères un suivi très personnalisé ou une organisation "école privée".</li>
+                        <li><i class="fa-solid fa-times"></i> Tu recherche des classes avec peu d'élles (effectifs réduits).</li>
+                        <li><i class="fa-solid fa-times"></i> Tu as besoin d'un encadrement rapproché pour réussir.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="section-padding">
+        <div class="container">
+            <h2 class="section-title">Contacts Utiles</h2>
+            
+            <div class="contact-container">
+                <!-- Info Générales -->
+                <div class="contact-info-box">
+                    <h3>Coordonnées Générales</h3>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fa-solid fa-map-location-dot"></i></div>
+                        <div class="contact-details">
+                            <h4>Adresse</h4>
+                            <p>Av. Abdelkrim Khattabi, B.P. 511<br>40000 Marrakech, Maroc</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fa-solid fa-phone"></i></div>
+                        <div class="contact-details">
+                            <h4>Téléphone</h4>
+                            <p>+212 5 24 43 77 41<br>+212 5 24 43 48 14</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fa-solid fa-globe"></i></div>
+                        <div class="contact-details">
+                            <h4>Site Web</h4>
+                            <a href="https://www.uca.ma/" target="_blank">www.uca.ma</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Emails Spécifiques -->
+                <div class="contact-emails">
+                    <h3>Services & E-mails</h3>
+                    <p class="mb-2 text-light">Pour des demandes spécifiques, voici les contacts directs :</p>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fa-solid fa-earth-americas"></i></div>
+                        <div class="contact-details">
+                            <h4>Relations Internationales</h4>
+                            <a href="mailto:international@uca.ma">international@uca.ma</a>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fa-solid fa-user-graduate"></i></div>
+                        <div class="contact-details">
+                            <h4>Bureau des Étudiants Internationaux</h4>
+                            <a href="mailto:bei-uca@uca.ma">bei-uca@uca.ma</a>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fa-solid fa-briefcase"></i></div>
+                        <div class="contact-details">
+                            <h4>Formation Continue</h4>
+                            <a href="mailto:formationcontinue@uca.ac.ma">formationcontinue@uca.ac.ma</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Guide Orientation Université Cadi Ayyad. Site informatif indépendant.</p>
+        </div>
+    </footer>
+        <!-- CHATBOT INTEGRATION -->
+    <script async type='module' src='https://interfaces.zapier.com/assets/web-components/zapier-interfaces/zapier-interfaces.esm.js'></script>
+    <zapier-interfaces-chatbot-embed is-popup='true' chatbot-id='cml6yl3ga000ciem38z0cx24k'></zapier-interfaces-chatbot-embed>
+
+
+</body>
+</html>

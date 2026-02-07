@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <!-- Viewport optimisé pour empêcher le zoom accidentel et s'adapter à l'écran -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Guide des Universités Marocaines</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #006064; /* Bleu Profond */
+            --secondary-color: #009688; /* Vert Émeraude */
+            --accent-color: #FFC107; /* Accent Jaune */
+            --bg-color: #F4F7F6;
+            --card-bg: #FFFFFF;
+            --text-primary: #333333;
+            --text-secondary: #666666;
+        }
+
+        * {
+            -webkit-tap-highlight-color: transparent; /* Supprime le bleu au clic sur mobile */
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            /* Centrage pour desktop, mais sera plein écran sur mobile */
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .poster-container {
+            width: 100%;
+            max-width: 720px;
+            background-color: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            min-height: 100vh; /* Prend au moins la hauteur de l'écran */
+        }
+
+        /* Header Section */
+        .header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 40px 30px 30px;
+            text-align: center;
+            position: sticky; /* Reste en haut au scroll */
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: -50px;
+            width: 200px;
+            height: 200px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .header p {
+            margin: 10px 0 0;
+            font-size: 15px;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        /* Main Content */
+        .content {
+            padding: 30px;
+            flex-grow: 1;
+        }
+
+        /* Domain Grid */
+        .domain-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .domain-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            cursor: pointer;
+            transition: transform 0.2s;
+            border-left: 5px solid var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            user-select: none; /* Empêche la sélection de texte au toucher */
+        }
+
+        .domain-card:active {
+            transform: scale(0.98); /* Effet d'appui tactile */
+            background-color: #f9f9f9;
+        }
+
+        .domain-icon {
+            background-color: #e0f2f1;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .domain-icon i {
+            font-size: 28px;
+            color: var(--primary-color);
+        }
+
+        .domain-info {
+            flex-grow: 1;
+        }
+
+        .domain-title {
+            font-family: 'Segoe UI', sans-serif;
+            font-weight: 600;
+            font-size: 16px;
+            margin: 0 0 4px;
+            color: var(--text-primary);
+        }
+
+        .domain-count {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        /* University List View */
+        .university-view {
+            display: none;
+        }
+
+        .view-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            /* Pour que le header de la vue suive le header principal si besoin, 
+               mais ici on garde le header principal fixe */
+        }
+
+        .back-btn {
+            background-color: #f0f0f0;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .back-btn:active {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .view-title {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .uni-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .uni-btn {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 15px; /* Plus de padding pour le tactile */
+            text-align: left;
+            cursor: pointer;
+            transition: background-color 0.2s, border-color 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 60px; /* Hauteur minimale pour le tactile */
+            user-select: none;
+        }
+
+        .uni-btn:active {
+            background-color: #f0fdfa;
+            border-color: var(--secondary-color);
+        }
+
+        .uni-name {
+            font-weight: 500;
+            font-size: 15px;
+            color: var(--text-primary);
+            line-height: 1.4;
+        }
+
+        .uni-arrow {
+            color: var(--secondary-color);
+            margin-left: 10px;
+        }
+
+        .public-tag {
+            display: inline-block;
+            background-color: #e0f2f1;
+            color: var(--primary-color);
+            padding: 2px 6px;
+            border-radius: 6px;
+            font-size: 11px;
+            margin-right: 6px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .private-tag {
+            display: inline-block;
+            background-color: #fff3e0;
+            color: #E65100;
+            padding: 2px 6px;
+            border-radius: 6px;
+            font-size: 11px;
+            margin-right: 6px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        /* Sub-headers inside lists */
+        .uni-list h3 {
+            font-size: 16px;
+            margin: 20px 0 10px 5px;
+            color: var(--secondary-color);
+            border-bottom: 2px solid #eee;
+            padding-bottom: 5px;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 15px;
+            font-size: 12px;
+            margin-top: auto;
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        /* --- MOBILE OPTIMIZATION --- */
+        @media (max-width: 480px) {
+            .poster-container {
+                box-shadow: none; /* Plein écran sans ombre */
+                border-radius: 0;
+            }
+            
+            .header {
+                padding: 25px 15px 20px;
+            }
+
+            .header h1 {
+                font-size: 22px;
+            }
+
+            .content {
+                padding: 20px 15px; /* Moins de marge sur les côtés */
+            }
+
+            .domain-grid {
+                gap: 15px;
+            }
+
+            .domain-card {
+                padding: 15px;
+                gap: 15px;
+            }
+
+            .domain-title {
+                font-size: 15px;
+            }
+
+            .uni-btn {
+                padding: 12px 10px;
+            }
+            
+            .uni-name {
+                font-size: 14px;
+            }
+            
+            .back-btn {
+                width: 36px;
+                height: 36px;
+            }
+            
+            .view-title {
+                font-size: 18px;
+            }
+        }
+
+        /* --- DESKTOP STYLES (kept from original) --- */
+        @media (min-width: 768px) {
+            .poster-container {
+                max-width: 960px;
+                margin: 20px 0;
+                min-height: auto;
+                border-radius: 12px;
+                overflow: hidden;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            }
+            
+            .domain-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .content {
+                padding: 40px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .poster-container {
+                max-width: 1200px;
+            }
+            
+            .domain-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .uni-list {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="poster-container">
+        <!-- Header -->
+        <header class="header">
+            <h1>Guide des Universités</h1>
+            <p>Trouvez votre formation au Maroc</p>
+        </header>
+
+        <!-- Main Content: Domain Grid -->
+        <div class="content" id="main-content">
+            <div class="domain-grid">
+                <!-- Domain 1 -->
+                <div class="domain-card" onclick="showUniversities(1)">
+                    <div class="domain-icon">
+                        <i class="material-icons">school</i>
+                    </div>
+                    <div class="domain-info">
+                        <h3 class="domain-title">Universités publiques</h3>
+                        <p class="domain-count">13 établissements</p>
+                    </div>
+                </div>
+
+                <!-- Domain 2 -->
+                <div class="domain-card" onclick="showUniversities(2)">
+                    <div class="domain-icon">
+                        <i class="material-icons">account_balance</i>
+                    </div>
+                    <div class="domain-info">
+                        <h3 class="domain-title">Statut particulier</h3>
+                        <p class="domain-count">5 établissements</p>
+                    </div>
+                </div>
+
+                <!-- Domain 3 -->
+                <div class="domain-card" onclick="showUniversities(3)">
+                    <div class="domain-icon">
+                        <i class="material-icons">engineering</i>
+                    </div>
+                    <div class="domain-info">
+                        <h3 class="domain-title">Ingénierie & Tech</h3>
+                        <p class="domain-count">Public & Privé</p>
+                    </div>
+                </div>
+
+                <!-- Domain 4 -->
+                <div class="domain-card" onclick="showUniversities(4)">
+                    <div class="domain-icon">
+                        <i class="material-icons">local_hospital</i>
+                    </div>
+                    <div class="domain-info">
+                        <h3 class="domain-title">Médecine & Santé</h3>
+                        <p class="domain-count">Public & Privé</p>
+                    </div>
+                </div>
+
+                <!-- Domain 5 -->
+                <div class="domain-card" onclick="showUniversities(5)">
+                    <div class="domain-icon">
+                        <i class="material-icons">business_center</i>
+                    </div>
+                    <div class="domain-info">
+                        <h3 class="domain-title">Commerce & Gestion</h3>
+                        <p class="domain-count">Public & Privé</p>
+                    </div>
+                </div>
+
+                <!-- Domain 6 -->
+                <div class="domain-card" onclick="showUniversities(6)">
+                    <div class="domain-icon">
+                        <i class="material-icons">gavel</i>
+                    </div>
+                    <div class="domain-info">
+                        <h3 class="domain-title">Droit & Sciences Pol.</h3>
+                        <p class="domain-count">Public & Privé</p>
+                    </div>
+                </div>
+
+                <!-- Domain 7 -->
+                <div class="domain-card" onclick="showUniversities(7)">
+                    <div class="domain-icon">
+                        <i class="material-icons">architecture</i>
+                    </div>
+                    <div class="domain-info">
+                        <h3 class="domain-title">Architecture & Design</h3>
+                        <p class="domain-count">Public & Privé</p>
+                    </div>
+                </div>
+
+                <!-- Domain 8 -->
+                <div class="domain-card" onclick="showUniversities(8)">
+                    <div class="domain-icon">
+                        <i class="material-icons">menu_book</i>
+                    </div>
+                    <div class="domain-info">
+                        <h3 class="domain-title">Enseignement</h3>
+                        <p class="domain-count">Public</p>
+                    </div>
+                </div>
+
+                <!-- Domain 9 -->
+                <div class="domain-card" onclick="showUniversities(9)">
+                    <div class="domain-icon">
+                        <i class="material-icons">theater_comedy</i>
+                    </div>
+                    <div class="domain-info">
+                        <h3 class="domain-title">Arts & Lettres</h3>
+                        <p class="domain-count">Public</p>
+                    </div>
+                </div>
+
+                <!-- Domain 10 -->
+                <div class="domain-card" onclick="showUniversities(10)">
+                    <div class="domain-icon">
+                        <i class="material-icons">shield</i>
+                    </div>
+                    <div class="domain-info">
+                        <h3 class="domain-title">Militaire & Sécurité</h3>
+                        <p class="domain-count">Public</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- University List Views (Hidden by default) -->
+        <div class="content university-view" id="uni-view-1">
+            <div class="view-header">
+                <button class="back-btn" onclick="showMainContent()">
+                    <i class="material-icons">arrow_back</i>
+                </button>
+                <h2 class="view-title">Universités publiques (généralistes)</h2>
+            </div>
+            <div class="uni-list">
+                <div class="uni-btn" onclick="goToUniversity('UM5R.html')">
+                    <span class="uni-name"><span class="public-tag">Public</span> Université Mohammed V de Rabat</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('UH2C.html')">
+                    <span class="uni-name"><span class="public-tag">Public</span> Université Hassan II de Casablanca</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('UCA.html')">
+                    <span class="uni-name"><span class="public-tag">Public</span> Université Cadi Ayyad de Marrakech</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('universite_sidi_mohamed.html')">
+                    <span class="uni-name"><span class="public-tag">Public</span> Université Sidi Mohamed Ben Abdellah de Fès</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('universite_ibn_zohr.html')">
+                    <span class="uni-name"><span class="public-tag">Public</span> Université Ibn Zohr d'Agadir</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('universite_abdelmalek.html')">
+                    <span class="uni-name"><span class="public-tag">Public</span> Université Abdelmalek Essaâdi de Tétouan–Tanger</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('universite_moulay_ismail.html')">
+                    <span class="uni-name"><span class="public-tag">Public</span> Université Moulay Ismaïl de Meknès</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('universite_chouaib_doukkali.html')">
+                    <span class="uni-name"><span class="public-tag">Public</span> Université Chouaib Doukkali d'El Jadida</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('universite_sultan_moulay.html')">
+                    <span class="uni-name"><span class="public-tag">Public</span> Université Sultan Moulay Slimane de Béni Mellal</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('universite_mohammed_premier.html')">
+                    <span class="uni-name"><span class="public-tag">Public</span> Université Mohammed Premier d'Oujda</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('universite_ibn_tofail.html')">
+                    <span class="uni-name"><span class="public-tag">Public</span> Université Ibn Tofaïl de Kénitra</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('universite_hassan_i.html')">
+                    <span class="uni-name"><span class="public-tag">Public</span> Université Hassan Ier de Settat</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('universite_al_quaraouiyine.html')">
+                    <span class="uni-name"><span class="public-tag">Public</span> Université Al Quaraouiyine de Fès</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Domain 2: Universités à statut particulier -->
+        <div class="content university-view" id="uni-view-2">
+            <div class="view-header">
+                <button class="back-btn" onclick="showMainContent()">
+                    <i class="material-icons">arrow_back</i>
+                </button>
+                <h2 class="view-title">Universités à statut particulier</h2>
+            </div>
+            <div class="uni-list">
+                <div class="uni-btn" onclick="goToUniversity('um6p.html')">
+                    <span class="uni-name"><span class="public-tag">Public-Privé</span> Université Mohammed VI Polytechnique (UM6P)</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('uir.html')">
+                    <span class="uni-name"><span class="public-tag">Public-Privé</span> Université Internationale de Rabat (UIR)</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('uemf.html')">
+                    <span class="uni-name"><span class="public-tag">Public-Privé</span> Université Euromed de Fès (UEMF)</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('um6ss.html')">
+                    <span class="uni-name"><span class="public-tag">Public-Privé</span> Université Mohammed VI des Sciences de la Santé (UM6SS)</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('universiapolis.html')">
+                    <span class="uni-name"><span class="public-tag">Public-Privé</span> Universiapolis – Université Internationale d'Agadir</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Domain 3: Ingénierie, sciences et technologies -->
+        <div class="content university-view" id="uni-view-3">
+            <div class="view-header">
+                <button class="back-btn" onclick="showMainContent()">
+                    <i class="material-icons">arrow_back</i>
+                </button>
+                <h2 class="view-title">Ingénierie, sciences et technologies</h2>
+            </div>
+            <div class="uni-list">
+                <h3 style="color: var(--secondary-color); margin: 10px 0;">Public</h3>
+                <div class="uni-btn" onclick="goToUniversity('emi.html')">
+                    <span class="uni-name"><span class="public-tag">Public</span> École Mohammadia d'Ingénieurs (EMI)</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('ensa.html')">
+                    <span class="uni-name"><span class="public-tag">Public</span> Écoles Nationales des Sciences Appliquées (ENSA)</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('ensias.html')">
+                    <span class="uni-name"><span class="public-tag">Public</span> École Nationale Supérieure d'Informatique et d'Analyse des Systèmes (ENSIAS)</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('enim.html')">
+                    <span class="uni-name"><span class="public-tag">Public</span> École Nationale de l'Industrie Minérale (ENIM)</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('ehtp.html')">
+                    <span class="uni-name"><span class="public-tag">Public</span> École Hassania des Travaux Publics (EHTP)</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('inpt.html')">
+                    <span class="uni-name"><span class="public-tag">Public</span> Institut National des Postes et Télécommunications (INPT)</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('fst.html')">
+                    <span class="uni-name"><span class="public-tag">Public</span> Facultés des Sciences et Techniques (FST)</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('est.html')">
+                    <span class="uni-name"><span class="public-tag">Public</span> Écoles Supérieures de Technologie (EST)</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('enam.html')">
+                    <span class="uni-name"><span class="public-tag">Public</span> École Nationale d'Agriculture de Meknès (ENAM)</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('enfib.html')">
+                    <span class="uni-name"><span class="public-tag">Public</span> École Nationale Forestière et de l'Industrie du Bois (ENFIB)</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                
+                <h3 style="color: var(--primary-color); margin: 20px 0 10px;">Privé</h3>
+                <div class="uni-btn" onclick="goToUniversity('ecole_centrale_casablanca.html')">
+                    <span class="uni-name"><span class="private-tag">Privé</span> École Centrale Casablanca</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('emsi.html')">
+                    <span class="uni-name"><span class="private-tag">Privé</span> École Marocaine des Sciences de l'Ingénieur (EMSI)</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('esisa.html')">
+                    <span class="uni-name"><span class="private-tag">Privé</span> École Supérieure d'Ingénierie en Sciences Appliquées (ESISA)</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('ehei.html')">
+                    <span class="uni-name"><span class="private-tag">Privé</span> École des Hautes Études d'Ingénierie (EHEI)</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('sup_management_ingenierie.html')">
+                    <span class="uni-name"><span class="private-tag">Privé</span> Sup'Management – Ingénierie</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('universiapolis_polytechnique.html')">
+                    <span class="uni-name"><span class="private-tag">Privé</span> Universiapolis – École Polytechnique d'Agadir</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('ecole_ingenieurs_abulcasis.html')">
+                    <span class="uni-name"><span class="private-tag">Privé</span> École d'Ingénieurs Abulcasis</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Domain 4: Médecine, pharmacie, santé -->
+        <div class="content university-view" id="uni-view-4">
+            <div class="view-header">
+                <button class="back-btn" onclick="showMainContent()">
+                    <i class="material-icons">arrow_back</i>
+                </button>
+                <h2 class="view-title">Médecine, pharmacie, santé</h2>
+            </div>
+            <div class="uni-list">
+                <h3 style="color: var(--secondary-color); margin: 10px 0;">Public</h3>
+                <div class="uni-btn" onclick="goToUniversity('fac_medecine_pharmacie.html')">
+                    <span class="uni-name"><span class="public-tag">Public</span> Facultés de Médecine et de Pharmacie</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('fac_medecine_dentaire.html')">
+                    <span class="uni-name"><span class="public-tag">Public</span> Facultés de Médecine Dentaire</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('ispits.html')">
+                    <span class="uni-name"><span class="public-tag">Public</span> Instituts Supérieurs des Professions Infirmières et Techniques de Santé (ISPITS)</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('ecole_royale_sante_militaire.html')">
+                    <span class="uni-name"><span class="public-tag">Public</span> École Royale du Service de Santé Militaire</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                
+                <h3 style="color: var(--primary-color); margin: 20px 0 10px;">Privé</h3>
+                <div class="uni-btn" onclick="goToUniversity('um6ss_sante.html')">
+                    <span class="uni-name"><span class="private-tag">Privé</span> Université Mohammed VI des Sciences de la Santé (UM6SS)</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('uir_medicine.html')">
+                    <span class="uni-name"><span class="private-tag">Privé</span> Université Internationale de Rabat – Médecine</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('uemf_sante.html')">
+                    <span class="uni-name"><span class="private-tag">Privé</span> Université Euromed de Fès – Santé</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('uiass.html')">
+                    <span class="uni-name"><span class="private-tag">Privé</span> Université Internationale Zahraoui des Sciences de la Santé (UIASS)</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Domain 5: Commerce, gestion, économie -->
+        <div class="content university-view" id="uni-view-5">
+            <div class="view-header">
+                <button class="back-btn" onclick="showMainContent()">
+                    <i class="material-icons">arrow_back</i>
+                </button>
+                <h2 class="view-title">Commerce, gestion, économie</h2>
+            </div>
+            <div class="uni-list">
+                <h3 style="color: var(--secondary-color); margin: 10px 0;">Public</h3>
+                <div class="uni-btn" onclick="goToUniversity('encg.html')">
+                    <span class="uni-name"><span class="public-tag">Public</span> Écoles Nationales de Commerce et de Gestion (ENCG)</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('iscae_public.html')">
+                    <span class="uni-name"><span class="public-tag">Public</span> Institut Supérieur de Commerce et d'Administration des Entreprises (ISCAE)</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('fsjes_economie.html')">
+                    <span class="uni-name"><span class="public-tag">Public</span> Facultés des Sciences Juridiques, Économiques et Sociales (FSJES)</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                
+                <h3 style="color: var(--primary-color); margin: 20px 0 10px;">Privé</h3>
+                <div class="uni-btn" onclick="goToUniversity('hem.html')">
+                    <span class="uni-name"><span class="private-tag">Privé</span> HEM Business School</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('esca.html')">
+                    <span class="uni-name"><span class="private-tag">Privé</span> ESCA École de Management</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('groupe_iscae.html')">
+                    <span class="uni-name"><span class="private-tag">Privé</span> Groupe ISCAE</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('al_akhawayn.html')">
+                    <span class="uni-name"><span class="private-tag">Privé</span> Université Al Akhawayn d'Ifrane</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('uir_business.html')">
+                    <span class="uni-name"><span class="private-tag">Privé</span> Université Internationale de Rabat – Business School</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('uemf_management.html')">
+                    <span class="uni-name"><span class="private-tag">Privé</span> Université Euromed de Fès – Management</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('em_lyon_casablanca.html')">
+                    <span class="uni-name"><span class="private-tag">Privé</span> EM Lyon Business School – Campus Casablanca</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('isga.html')">
+                    <span class="uni-name"><span class="private-tag">Privé</span> ISGA</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('mundiapolis.html')">
+                    <span class="uni-name"><span class="private-tag">Privé</span> Mundiapolis Business School</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Domain 6: Droit, sciences politiques -->
+        <div class="content university-view" id="uni-view-6">
+            <div class="view-header">
+                <button class="back-btn" onclick="showMainContent()">
+                    <i class="material-icons">arrow_back</i>
+                </button>
+                <h2 class="view-title">Droit, sciences politiques</h2>
+            </div>
+            <div class="uni-list">
+                <h3 style="color: var(--secondary-color); margin: 10px 0;">Public</h3>
+                <div class="uni-btn" onclick="goToUniversity('fsjes_droit.html')">
+                    <span class="uni-name"><span class="public-tag">Public</span> Facultés des Sciences Juridiques, Économiques et Sociales (FSJES)</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('ena.html')">
+                    <span class="uni-name"><span class="public-tag">Public</span> École Nationale d'Administration (ENA)</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('irat.html')">
+                    <span class="uni-name"><span class="public-tag">Public</span> Institut Royal de l'Administration Territoriale (IRAT)</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                
+                <h3 style="color: var(--primary-color); margin: 20px 0 10px;">Privé</h3>
+                <div class="uni-btn" onclick="goToUniversity('uir_droit.html')">
+                    <span class="uni-name"><span class="private-tag">Privé</span> Université Internationale de Rabat – Droit et sciences politiques</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('uemf_relations_internationales.html')">
+                    <span class="uni-name"><span class="private-tag">Privé</span> Université Euromed de Fès – Relations internationales</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('al_akhawayn_public_policy.html')">
+                    <span class="uni-name"><span class="private-tag">Privé</span> Université Al Akhawayn – Public Policy</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Domain 7: Architecture, urbanisme, design -->
+        <div class="content university-view" id="uni-view-7">
+            <div class="view-header">
+                <button class="back-btn" onclick="showMainContent()">
+                    <i class="material-icons">arrow_back</i>
+                </button>
+                <h2 class="view-title">Architecture, urbanisme, design</h2>
+            </div>
+            <div class="uni-list">
+                <h3 style="color: var(--secondary-color); margin: 10px 0;">Public</h3>
+                <div class="uni-btn" onclick="goToUniversity('ena_architecture.html')">
+                    <span class="uni-name"><span class="public-tag">Public</span> Écoles Nationales d'Architecture (ENA)</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('inau.html')">
+                    <span class="uni-name"><span class="public-tag">Public</span> Institut National d'Aménagement et d'Urbanisme (INAU)</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                
+                <h3 style="color: var(--primary-color); margin: 20px 0 10px;">Privé</h3>
+                <div class="uni-btn" onclick="goToUniversity('esac.html')">
+                    <span class="uni-name"><span class="private-tag">Privé</span> École Supérieure d'Architecture de Casablanca (ESAC)</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('uir_architecture.html')">
+                    <span class="uni-name"><span class="private-tag">Privé</span> Université Internationale de Rabat – Architecture</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Domain 8: Enseignement et formation -->
+        <div class="content university-view" id="uni-view-8">
+            <div class="view-header">
+                <button class="back-btn" onclick="showMainContent()">
+                    <i class="material-icons">arrow_back</i>
+                </button>
+                <h2 class="view-title">Enseignement et formation</h2>
+            </div>
+            <div class="uni-list">
+                <div class="uni-btn" onclick="goToUniversity('ens.html')">
+                    <span class="uni-name"><span class="public-tag">Public</span> Écoles Normales Supérieures (ENS)</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('crmef.html')">
+                    <span class="uni-name"><span class="public-tag">Public</span> Centres Régionaux des Métiers de l'Éducation et de la Formation (CRMEF)</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Domain 9: Arts, lettres, sciences humaines -->
+        <div class="content university-view" id="uni-view-9">
+            <div class="view-header">
+                <button class="back-btn" onclick="showMainContent()">
+                    <i class="material-icons">arrow_back</i>
+                </button>
+                <h2 class="view-title">Arts, lettres, sciences humaines</h2>
+            </div>
+            <div class="uni-list">
+                <div class="uni-btn" onclick="goToUniversity('fac_lettres.html')">
+                    <span class="uni-name"><span class="public-tag">Public</span> Facultés des Lettres et des Sciences Humaines</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('inba.html')">
+                    <span class="uni-name"><span class="public-tag">Public</span> Institut National des Beaux-Arts (INBA)</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('isadac.html')">
+                    <span class="uni-name"><span class="public-tag">Public</span> Institut Supérieur d'Art Dramatique et d'Animation Culturelle (ISADAC)</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('ismac.html')">
+                    <span class="uni-name"><span class="public-tag">Public</span> Institut Supérieur des Métiers de l'Audiovisuel et du Cinéma (ISMAC)</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('insap.html')">
+                    <span class="uni-name"><span class="public-tag">Public</span> Institut National des Sciences de l'Archéologie et du Patrimoine (INSAP)</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Domain 10: Formation militaire et sécurité -->
+        <div class="content university-view" id="uni-view-10">
+            <div class="view-header">
+                <button class="back-btn" onclick="showMainContent()">
+                    <i class="material-icons">arrow_back</i>
+                </button>
+                <h2 class="view-title">Formation militaire et sécurité</h2>
+            </div>
+            <div class="uni-list">
+                <div class="uni-btn" onclick="goToUniversity('academie_royale_militaire.html')">
+                    <span class="uni-name"><span class="public-tag">Public</span> Académie Royale Militaire</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('academie_royale_air.html')">
+                    <span class="uni-name"><span class="public-tag">Public</span> Académie Royale de l'Air</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('ecole_royale_navale.html')">
+                    <span class="uni-name"><span class="public-tag">Public</span> École Royale Navale</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('institut_royal_police.html')">
+                    <span class="uni-name"><span class="public-tag">Public</span> Institut Royal de Police</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+                <div class="uni-btn" onclick="goToUniversity('isem.html')">
+                    <span class="uni-name"><span class="public-tag">Public</span> Institut Supérieur d'Études Maritimes (ISEM)</span>
+                    <i class="material-icons uni-arrow">chevron_right</i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            © 2024 Guide des Universités Marocaines
+        </footer>
+    </div>
+
+    <script>
+        function showUniversities(domainId) {
+            // Hide main content
+            document.getElementById('main-content').style.display = 'none';
+            
+            // Hide all university views
+            const uniViews = document.querySelectorAll('.university-view');
+            uniViews.forEach(view => {
+                view.style.display = 'none';
+            });
+            
+            // Show the selected university view
+            const selectedView = document.getElementById('uni-view-' + domainId);
+            selectedView.style.display = 'block';
+            selectedView.classList.add('fade-in');
+            
+            // Remove animation class after it completes
+            setTimeout(() => {
+                selectedView.classList.remove('fade-in');
+            }, 300); // Réduit légèrement pour mobile
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+        
+        function showMainContent() {
+            // Hide all university views
+            const uniViews = document.querySelectorAll('.university-view');
+            uniViews.forEach(view => {
+                view.style.display = 'none';
+            });
+            
+            // Show main content
+            const mainContent = document.getElementById('main-content');
+            mainContent.style.display = 'block';
+            mainContent.classList.add('fade-in');
+            
+            // Remove animation class after it completes
+            setTimeout(() => {
+                mainContent.classList.remove('fade-in');
+            }, 300);
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+        
+        function goToUniversity(url) {
+            // This function redirects to the actual university page
+            window.location.href = url;
+        }
+    </script>
+        <!-- CHATBOT INTEGRATION -->
+    <script async type='module' src='https://interfaces.zapier.com/assets/web-components/zapier-interfaces/zapier-interfaces.esm.js'></script>
+    <zapier-interfaces-chatbot-embed is-popup='true' chatbot-id='cml6yl3ga000ciem38z0cx24k'></zapier-interfaces-chatbot-embed>
+
+</body>
+</html>

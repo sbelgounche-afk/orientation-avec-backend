@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orientation Scolaire Maroc - Module IA Pro</title>
+    <!-- Police Moderne -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- 1. VARIABLES CSS (PALETTE ITTIJAH - TEAL & NAVY) --- */
+        :root {
+            /* Couleurs Principales (Issues du code Ittijah Modifié) */
+            --primary: #006064;       /* Bleu Profond/Teal */
+            --primary-light: #4DD0E1; /* Cyan Clair */
+            --secondary: #009688;     /* Vert Émeraude */
+            --accent: #FFC107;        /* Jaune Amber */
+            --accent-text: #333333;
+
+            /* États */
+            --danger: #ef5350;
+
+            /* Textes (Issues du code Ittijah) */
+            --text-main: #1F2937;     /* Gris très foncé */
+            --text-muted: #6B7280;    /* Gris moyen */
+
+            /* Surfaces (Issues du code Ittijah) */
+            --bg-body: #F8F9FA;       /* Fond très clair */
+            --bg-surface: #ffffff;    /* Blanc pur */
+            --bg-input: #F3F4F6;      /* Gris clair pour inputs */
+
+            /* Bordures & Ombres (Issues du code Ittijah) */
+            --border-color: #E5E7EB;
+            --border-focus: #009688;   /* Focus vert émeraude */
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+
+            /* Forme */
+            --radius-sm: 6px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+        }
+
+        /* --- DARK MODE (BLEU PROFOND ITTIJAH) --- */
+        [data-theme="dark"] {
+            /* Surfaces */
+            --bg-body: #0F172A;
+            --bg-surface: #1E293B;
+            --bg-input: #334155;
+
+            /* Textes */
+            --text-main: #F3F4F6;
+            --text-muted: #9CA3AF;
+
+            /* Bordures */
+            --border-color: #334155;
+
+            /* Couleur Primaire change pour le Dark Mode (comme Ittijah) */
+            --primary: #3B82F6;       /* Bleu moderne */
+            --primary-light: #1E293B;
+            --secondary: #10B981;     /* Vert plus lumineux */
+            
+            /* Ombres */
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+        }
+
+        /* --- 2. BASE & RESET --- */
+        * { box-sizing: border-box; outline: none; }
+
+        body {
+            font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px 20px;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- 3. HEADER (Utilise les couleurs Ittijah) --- */
+        header {
+            max-width: 900px;
+            margin: 0 auto 40px auto;
+            padding: 60px 40px;
+            /* Dégradé utilisant les variables Ittijah */
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: var(--radius-lg);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* Texture subtile Header (Gardée) */
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 60%);
+            animation: rotateBg 30s linear infinite;
+            pointer-events: none;
+        }
+        @keyframes rotateBg { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 0;
+            letter-spacing: -0.03em;
+            position: relative;
+            z-index: 1;
+        }
+
+        p.subtitle {
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.9);
+            margin-top: 12px;
+            font-weight: 400;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* --- 4. BOUTON THEME (MODERNE SVG) --- */
+        #theme-toggle {
+            position: absolute;
+            top: 24px; right: 24px;
+            width: 44px;
+            height: 44px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 10;
+            overflow: hidden;
+        }
+
+        #theme-toggle:hover { 
+            background: rgba(255, 255, 255, 0.25); 
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        #theme-toggle:active { transform: scale(0.95); }
+
+        /* Gestion des icônes SVG */
+        #theme-toggle svg {
+            width: 22px;
+            height: 22px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            position: absolute;
+            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55), opacity 0.3s ease;
+        }
+
+        /* Icônes invisibles par défaut */
+        .icon-sun, .icon-moon {
+            opacity: 0;
+            transform: rotate(-90deg) scale(0.5);
+            pointer-events: none;
+        }
+
+        /* État Clair : Lune visible */
+        body:not([data-theme="dark"]) .icon-moon {
+            opacity: 1;
+            transform: rotate(0deg) scale(1);
+        }
+
+        /* État Sombre : Soleil visible */
+        body[data-theme="dark"] .icon-sun {
+            opacity: 1;
+            transform: rotate(0deg) scale(1);
+        }
+
+        /* --- 5. MAIN & FORM --- */
+        main {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--bg-surface);
+            padding: 48px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-xl);
+            border: 1px solid var(--border-color);
+            transition: background-color 0.3s ease;
+        }
+
+        .form-section {
+            background: var(--bg-input); /* Utilise le fond input ittijah */
+            padding: 32px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            margin-bottom: 40px;
+        }
+
+        .form-section h3 {
+            margin-top: 0; margin-bottom: 24px;
+            font-size: 1.25rem;
+            color: var(--primary); /* Utilise le primaire ittijah */
+            font-weight: 700;
+        }
+
+        .form-group { margin-bottom: 24px; }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-main);
+            font-size: 0.9rem;
+        }
+
+        select, input[type="text"] {
+            width: 100%;
+            padding: 14px 16px;
+            background: var(--bg-surface);
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            font-size: 1rem;
+            color: var(--text-main);
+            transition: all 0.2s ease;
+            box-shadow: var(--shadow-sm);
+        }
+
+        select:focus, input[type="text"]:focus {
+            border-color: var(--border-focus);
+            box-shadow: 0 0 0 3px rgba(0, 150, 136, 0.1); /* Halo vert émeraude */
+            background: var(--bg-surface);
+        }
+
+        button[type="submit"], .btn-primary {
+            width: 100%;
+            padding: 16px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        button[type="submit"]:hover, .btn-primary:hover {
+            background: var(--secondary);
+            transform: translateY(-1px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        /* --- 6. CARTES & RÉSULTATS --- */
+        #results-section, #searchResults {
+            margin-top: 40px;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .result-header {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 32px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .result-header h2 { margin: 0; font-size: 1.5rem; color: var(--text-main); }
+        .badge {
+            background: var(--bg-input);
+            color: var(--primary);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            border: 1px solid var(--border-color);
+        }
+
+        .jobs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .job-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            opacity: 0;
+            animation: slideUp 0.5s forwards;
+        }
+
+        .job-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-light);
+        }
+
+        /* Trait bleu en haut au survol */
+        .job-card::after {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+            background: var(--primary); opacity: 0; transition: opacity 0.3s ease;
+        }
+        .job-card:hover::after { opacity: 1; }
+
+        .job-title {
+            font-weight: 700;
+            font-size: 1.15rem;
+            margin-bottom: 12px;
+            color: var(--text-main);
+            padding-right: 30px;
+        }
+
+        .job-path {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            background: var(--bg-input);
+            padding: 14px;
+            border-radius: var(--radius-sm);
+            margin-top: 16px;
+            border: 1px solid var(--border-color);
+        }
+        .job-path strong { color: var(--primary); }
+
+        /* Tags */
+        .job-tag {
+            display: inline-block;
+            background: #ffffff;
+            color: var(--text-muted);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            margin-right: 6px;
+            margin-bottom: 6px;
+            border: 1px solid var(--border-color);
+            transition: all 0.2s;
+        }
+        .job-tag:hover {
+            border-color: var(--secondary);
+            color: var(--primary);
+        }
+
+        /* Salaire en Vert (Conservé) */
+        .salary-box {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 12px;
+            font-weight: 600;
+            color: var(--secondary); /* Vert Ittijah */
+            font-size: 0.9rem;
+            background: rgba(0, 150, 136, 0.1);
+            padding: 4px 10px;
+            border-radius: 6px;
+        }
+
+        /* Fav Button */
+        .fav-btn {
+            position: absolute;
+            top: 20px; right: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-muted);
+            font-size: 1.4rem;
+            transition: transform 0.2s, color 0.2s;
+        }
+        .fav-btn:hover { transform: scale(1.2); color: var(--primary); }
+        .fav-btn.active { color: var(--danger); }
+
+        /* --- 7. FOOTER & TOAST --- */
+        footer { text-align: center; margin-top: 50px; color: var(--text-muted); font-size: 0.9rem; }
+        
+        .toast {
+            position: fixed; bottom: 24px; right: 24px;
+            background: var(--bg-surface);
+            color: var(--text-main);
+            padding: 12px 20px;
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow-lg);
+            border-left: 4px solid var(--primary);
+            z-index: 1000;
+            font-weight: 500;
+            animation: slideInRight 0.3s forwards;
+        }
+
+        /* --- ANIMATIONS --- */
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideInRight { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 600px) {
+            body { padding: 20px 10px; }
+            header { padding: 40px 20px; }
+            h1 { font-size: 1.8rem; }
+            main { padding: 24px; border-radius: 16px; }
+            .jobs-grid { grid-template-columns: 1fr; }
+            #theme-toggle { top: 16px; right: 16px; width: 40px; height: 40px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <!-- BOUTON THÈME MODERNISÉ -->
+        <button id="theme-toggle" aria-label="Changer le thème">
+            <!-- Icône Lune (Visible en mode Clair) -->
+            <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+            <!-- Icône Soleil (Visible en mode Sombre) -->
+            <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="5"></circle>
+                <line x1="12" y1="1" x2="12" y2="3"></line>
+                <line x1="12" y1="21" x2="12" y2="23"></line>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                <line x1="1" y1="12" x2="3" y2="12"></line>
+                <line x1="21" y1="12" x2="23" y2="12"></line>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+        </button>
+
+        <h1>Mon Orientation Avenir</h1>
+        <p class="subtitle">Système d'orientation intelligent - Édition Maroc</p>
+    </header>
+
+    <main>
+        <!-- SECTION1 : FORMULAIRE -->
+        <section class="form-section">
+            <h3>Vos Informations Scolaires</h3>
+            <form id="orientationForm">
+                <div class="form-group">
+                    <label for="niveau">Année Scolaire Actuelle</label>
+                    <select id="niveau" required>
+                        <option value="" disabled selected>-- Choisir l'année --</option>
+                        <option value="college">Collège (3ème Année)</option>
+                        <option value="tc">Tronc Commun</option>
+                        <option value="1ere">1ère Année Baccalauréat</option>
+                        <option value="term">2ème Année Baccalauréat (Terminal)</option>
+                    </select>
+                </div>
+
+                <div class="form-group" id="filiere-group">
+                    <label for="filiere">Filière</label>
+                    <select id="filiere" required disabled>
+                        <option value="" disabled selected>-- D'abord choisir l'année --</option>
+                    </select>
+                </div>
+
+                <button type="submit">Obtenir mes suggestions</button>
+            </form>
+        </section>
+
+        <!-- BARRE DE RECHERCHE -->
+        <div style="margin-bottom: 40px;">
+            <input type="text" id="searchInput" placeholder="🔍 Rechercher un métier (ex: Ingénieur, Médecin)...">
+            <div id="searchResults"></div>
+        </div>
+
+        <!-- SECTION2 : RÉSULTATS -->
+        <section id="results-section">
+            <div class="result-header">
+                <h2 id="result-title">Résultats</h2>
+                <span class="badge" id="result-context"></span>
+            </div>
+            <div id="results-container"></div>
+        </section>
+
+        <!-- SECTION FAVORIS -->
+        <section id="favorites-section">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                <h3 style="margin:0; color:var(--text-main);">❤️ Mes Favoris</h3>
+                <button id="clearFav" style="background:transparent; border:1px solid var(--danger); color:var(--danger); padding:6px 12px; border-radius:6px; cursor:pointer; font-size:0.85rem;">Tout effacer</button>
+            </div>
+            <div style="clear:both;"></div>
+            <div id="favorites-container" class="jobs-grid"></div>
+        </section>
+
+    </main>
+
+    <footer>
+        &copy; - 2025 Orientation Maroc - 
+    </footer>
+
+    <!-- LOGIQUE JAVASCRIPT -->
+    <script>
+        const baseMetiersMaroc = {
+            "Sciences Mathématiques": [
+                { titre: "Ingénieur d'État", path: "Bac SM → CPGE (MPSI/PTSI) → Concours CNC → Grande École", niveau: "lycee", salaire: "8k - 25k MAD", competences: ["Maths", "Physique", "Code"], secteur: "Industrie" },
+                { titre: "Médecin", path: "Bac SM → Faculté de Médecine → 7 ans → Résidanat", niveau: "lycee", salaire: "Variable + Gardes", competences: ["Biologie", "Empathie", "Rigueur"], secteur: "Santé" },
+                { titre: "Architecte", path: "Bac SM → ENA (École Nationale d'Architecture)", niveau: "lycee", salaire: "7k - 20k MAD", competences: ["Dessin", "3D", "Créativité"], secteur: "BTP" },
+                { titre: "Data Scientist", path: "Bac SM → FST Informatique/Maths → Master Data", niveau: "lycee", salaire: "10k - 30k MAD", competences: ["Stats", "Python", "ML"], secteur: "Tech" }
+            ],
+            "Sciences Expérimentales": [
+                { titre: "Médecin / Dentiste", path: "Bac SE → Faculté de Médecine/Pharmacie", niveau: "lycee", salaire: "Variable", competences: ["Biologie", "Chimie"], secteur: "Santé" },
+                { titre: "Ingénieur Agronome", path: "Bac SE → IAV Hassan II", niveau: "lycee", salaire: "7k - 18k MAD", competences: ["Agronomie", "Écologie"], secteur: "Agro" },
+                { titre: "Biologiste", path: "Bac SE → FST → Master Recherche", niveau: "lycee", salaire: "6k - 15k MAD", competences: ["Labo", "Analyse"], secteur: "Recherche" },
+                { titre: "Infirmier", path: "Bac SE → ISTA Spécialisé", niveau: "lycee", salaire: "4k - 8k MAD", competences: ["Soins", "Patience"], secteur: "Santé" }
+            ],
+            "Sciences Économiques": [
+                { titre: "Manager / Chef d'Entreprise", path: "Bac SEG → ENCG ou ISCAE", niveau: "lycee", salaire: "8k - 40k+ MAD", competences: ["Leadership", "Gestion"], secteur: "Business" },
+                { titre: "Expert-Comptable", path: "Bac SEG → ESC ou Université", niveau: "lycee", salaire: "6k - Illimité", competences: ["Comptabilité", "Audit"], secteur: "Finance" },
+                { titre: "Marketing / Commercial", path: "Bac SEG -> École Commerce", niveau: "lycee", salaire: "5k - 20k MAD", competences: ["Vente", "Digital"], secteur: "Commerce" },
+                { titre: "Agent Bancaire", path: "Bac SEG → OFPPT / Université", niveau: "lycee", salaire: "4k - 9k MAD", competences: ["Finance", "Service"], secteur: "Banque" }
+            ],
+            "Lettres et Sciences Humaines": [
+                { titre: "Professeur Secondaire", path: "Bac LSH → CRMEF", niveau: "lycee", salaire: "5k - 9k MAD", competences: ["Pédagogie", "Com. Orale"], secteur: "Éducation" },
+                { titre: "Journaliste", path: "Bac LSH → ESJ ou Inst. Com.", niveau: "lycee", salaire: "5k - 15k MAD", competences: ["Rédaction", "Investigation"], secteur: "Média" },
+                { titre: "Psychologue", path: "Bac LSH → Faculté Lettres → Master", niveau: "lycee", salaire: "5k - 12k MAD", competences: ["Écoute", "Analyse"], secteur: "Social" },
+                { titre: "Avocat", path: "Bac LSH → Faculté de Droit", niveau: "lycee", salaire: "Illimité", competences: ["Droit", "Plaidoirie"], secteur: "Justice" }
+            ]
+        };
+
+        // DOM Elements
+        const niveauSelect = document.getElementById('niveau');
+        const filiereSelect = document.getElementById('filiere');
+        const form = document.getElementById('orientationForm');
+        const resultsSection = document.getElementById('results-section');
+        const resultsContainer = document.getElementById('results-container');
+        const searchResults = document.getElementById('searchResults');
+        const searchInput = document.getElementById('searchInput');
+
+        const filieresParNiveau = {
+            "college": [], "tc": [], "1ere": ["Sciences Mathématiques", "Sciences Expérimentales", "Sciences Économiques", "Lettres et Sciences Humaines"],
+            "term": ["Sciences Mathématiques", "Sciences Expérimentales", "Sciences Économiques", "Lettres et Sciences Humaines"]
+        };
+
+        niveauSelect.addEventListener('change', function() {
+            const niveau = this.value;
+            filiereSelect.innerHTML = '<option value="" disabled selected>-- Choisir la filière --</option>';
+            if (filieresParNiveau[niveau]) {
+                if (niveau === "college" || niveau === "tc") {
+                    const opt = document.createElement('option');
+                    opt.value = "General"; 
+                    opt.textContent = niveau === "college" ? "Cycle Collégial" : "Tronc Commun (Tous)";
+                    filiereSelect.appendChild(opt);
+                } else {
+                    filieresParNiveau[niveau].forEach(f => {
+                        const opt = document.createElement('option');
+                        opt.value = f;
+                        opt.textContent = f;
+                        filiereSelect.appendChild(opt);
+                    });
+                }
+                filiereSelect.disabled = false;
+            } else {
+                filiereSelect.disabled = true;
+            }
+        });
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const niveau = niveauSelect.value;
+            const filiere = filiereSelect.value;
+            searchResults.style.display = 'none';
+            searchInput.value = '';
+            
+            resultsSection.style.display = 'block';
+            resultsContainer.innerHTML = '<div style="text-align:center; padding:40px; color:var(--text-muted);">Analyse en cours...</div>';
+            document.getElementById('result-context').textContent = `${niveau.toUpperCase()} - ${filiere.toUpperCase()}`;
+
+            setTimeout(() => {
+                afficherResultats(niveau, filiere);
+                resultsSection.scrollIntoView({ behavior: 'smooth' });
+            },500);
+        });
+
+        function afficherResultats(niveau, filiere) {
+            resultsContainer.innerHTML = '';
+            if (niveau === "college" || niveau === "tc") {
+                afficherMessage(niveau === "college" ? "Concentrez-vous sur les sciences pour ouvrir le maximum de portes." : "C'est le moment de choisir votre voie selon vos aptitudes.");
+                afficherCartes(baseMetiersMaroc["Sciences Mathématiques"].slice(0,1));
+                afficherCartes(baseMetiersMaroc["Sciences Économiques"].slice(0,1));
+                return;
+            }
+            const suggestions = baseMetiersMaroc[filiere] || [];
+            afficherCartes(suggestions);
+        }
+
+        function afficherMessage(msg) {
+            const div = document.createElement('div');
+            div.style.cssText = "background:var(--bg-input); color:var(--primary); padding:16px; border-radius:8px; margin-bottom:20px; text-align:center; font-weight:500;";
+            div.textContent = msg;
+            resultsContainer.appendChild(div);
+        }
+
+        function afficherCartes(liste, targetContainer = resultsContainer, isFavList = false) {
+            liste.forEach((job, i) => {
+                const card = document.createElement('div');
+                card.className = "job-card";
+                card.style.animationDelay = `${i * 0.05}s`;
+                
+                const jobId = job.titre.replace(/\s+/g, '-');
+                const isFav = localStorage.getItem('fav_' + jobId) === 'true';
+                
+                let tags = job.competences ? job.competences.map(c => `<span class="job-tag">${c}</span>`).join('') : '';
+
+                card.innerHTML = `
+                    <button class="fav-btn ${isFav ? 'active' : ''}" onclick="toggleFav('${jobId}', this)">♥</button>
+                    <div class="job-title">${job.titre}</div>
+                    ${job.salaire ? `<div class="salary-box">💰 ${job.salaire}</div>` : ''}
+                    <div class="job-path"><strong>Parcours :</strong> ${job.path}</div>
+                    <div style="margin-top:12px;">${tags}</div>
+                    ${job.secteur ? `<div style="margin-top:10px; font-size:0.8rem; color:var(--text-muted);">🏢 ${job.secteur}</div>` : ''}
+                `;
+                targetContainer.appendChild(card);
+            });
+        }
+
+        function toggleFav(id, btn) {
+            const status = !(localStorage.getItem('fav_' + id) === 'true');
+            localStorage.setItem('fav_' + id, status);
+            btn.classList.toggle('active');
+            showToast(status ? "Ajouté aux favoris" : "Retiré des favoris");
+            renderFavorites();
+        }
+
+        function renderFavorites() {
+            const container = document.getElementById('favorites-container');
+            const section = document.getElementById('favorites-section');
+            container.innerHTML = '';
+            let favs = [];
+            Object.values(baseMetiersMaroc).forEach(arr => arr.forEach(j => {
+                if(localStorage.getItem('fav_' + j.titre.replace(/\s+/g, '-')) === 'true') favs.push(j);
+            }));
+            if(favs.length) {
+                section.style.display = 'block';
+                afficherCartes(favs, container, true);
+            } else {
+                section.style.display = 'none';
+            }
+        }
+
+        function showToast(msg) {
+            const t = document.createElement('div');
+            t.className = 'toast'; t.textContent = msg;
+            document.body.appendChild(t);
+            setTimeout(() => { t.style.opacity = '0'; setTimeout(() => t.remove(),300); },2000);
+        }
+
+        document.getElementById('clearFav').onclick = () => {
+            if(confirm("Effacer tout ?")) {
+                localStorage.clear();
+                document.querySelectorAll('.fav-btn').forEach(b => b.classList.remove('active'));
+                renderFavorites();
+            }
+        };
+
+        searchInput.addEventListener('input', (e) => {
+            const q = e.target.value.toLowerCase();
+            if(q.length < 2) { searchResults.style.display = 'none'; return; }
+            resultsSection.style.display = 'none'; searchResults.style.display = 'block';
+            searchResults.innerHTML = '<h3 style="color:var(--text-main); margin-bottom:20px;">Recherche</h3>';
+            const grid = document.createElement('div'); grid.className = 'jobs-grid';
+            let found = [];
+            Object.values(baseMetiersMaroc).forEach(arr => arr.forEach(j => {
+                if(j.titre.toLowerCase().includes(q)) found.push(j);
+            }));
+            if(found.length) afficherCartes(found, grid);
+            else searchResults.innerHTML += '<p style="color:var(--text-muted)">Aucun résultat.</p>';
+            searchResults.appendChild(grid);
+        });
+
+        // Theme Logic (Modernisé)
+        const themeBtn = document.getElementById('theme-toggle');
+        function setTheme(t) {
+            document.documentElement.setAttribute('data-theme', t);
+            // Le CSS gère désormais l'affichage des icônes et l'animation
+            localStorage.setItem('theme', t);
+        }
+        themeBtn.onclick = () => setTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+        
+        const saved = localStorage.getItem('theme');
+        if(saved) setTheme(saved);
+        else if(window.matchMedia('(prefers-color-scheme: dark)').matches) setTheme('dark');
+        else setTheme('light');
+        
+        window.addEventListener('DOMContentLoaded', renderFavorites);
+    </script>
+        <!-- CHATBOT INTEGRATION -->
+    <script async type='module' src='https://interfaces.zapier.com/assets/web-components/zapier-interfaces/zapier-interfaces.esm.js'></script>
+    <zapier-interfaces-chatbot-embed is-popup='true' chatbot-id='cml6yl3ga000ciem38z0cx24k'></zapier-interfaces-chatbot-embed>
+
+</body>
+</html>

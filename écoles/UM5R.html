@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guide d'Orientation - Université Mohammed V de Rabat</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- VARIABLES --- */
+        :root {
+            /* Palette Bleu et Blanc */
+            --primary-blue: #0056b3;
+            --dark-blue: #003366;
+            --light-blue: #eef6fc;
+            --white: #FFFFFF;
+            
+            /* Couleurs d'analyse */
+            --success-color: #2e7d32;
+            --success-bg: #e8f5e9;
+            --warning-color: #d35400;
+            --warning-bg: #fbe9e7;
+            
+            /* Texte */
+            --text-dark: #1a202c;
+            --text-gray: #4a5568;
+            
+            /* Layout */
+            --container-width: 1100px;
+            --radius: 12px;
+            --shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        /* --- RESET & BASE --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-dark);
+            background-color: #f8fafc;
+            line-height: 1.7;
+        }
+
+        h1, h2, h3 {
+            font-weight: 700;
+            color: var(--dark-blue);
+            margin-bottom: 1rem;
+        }
+
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        ul { list-style: none; }
+
+        /* --- CONTAINER --- */
+        .container {
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-padding { padding: 70px 0; }
+        .text-center { text-align: center; }
+
+        /* --- HEADER --- */
+        header {
+            background: var(--white);
+            border-bottom: 1px solid #e2e8f0;
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--dark-blue);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-link {
+            font-weight: 600;
+            color: var(--text-gray);
+            margin-left: 20px;
+        }
+        
+        .nav-link:hover { color: var(--primary-blue); }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            background: linear-gradient(120deg, var(--dark-blue) 0%, var(--primary-blue) 100%);
+            color: var(--white);
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        .hero h1 { color: var(--white); font-size: 2.8rem; margin-bottom: 15px; }
+        .hero p { font-size: 1.25rem; opacity: 0.9; max-width: 800px; margin: 0 auto 30px; }
+
+        .btn-hero {
+            background: var(--white);
+            color: var(--primary-blue);
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 700;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .btn-hero:hover { transform: translateY(-2px); }
+
+        /* --- SECTION TITLES --- */
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .section-header h2 { font-size: 2.2rem; margin-bottom: 10px; }
+        .section-header p { color: var(--text-gray); font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
+        .separator {
+            width: 80px;
+            height: 4px;
+            background: var(--primary-blue);
+            margin: 20px auto 0;
+            border-radius: 2px;
+        }
+
+        /* --- 1. DESCRIPTION --- */
+        .desc-card {
+            background: var(--white);
+            padding: 50px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            text-align: center;
+            border-top: 5px solid var(--primary-blue);
+        }
+
+        .desc-text { font-size: 1.1rem; color: var(--text-gray); }
+        .stats-row {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .stat-box { text-align: center; }
+        .stat-val { font-size: 1.8rem; font-weight: 800; color: var(--primary-blue); display: block; }
+        .stat-label { font-size: 0.9rem; color: var(--text-gray); }
+
+        /* --- 2. FILIERES --- */
+        .grid-filieres {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .filiere-card {
+            background: var(--white);
+            padding: 30px;
+            border-radius: var(--radius);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+            transition: transform 0.3s;
+            border: 1px solid #eee;
+        }
+
+        .filiere-card:hover { transform: translateY(-5px); border-color: var(--primary-blue); }
+
+        .f-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--light-blue);
+            color: var(--primary-blue);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .filiere-card h3 { font-size: 1.3rem; margin-bottom: 10px; }
+        .filiere-card p { color: var(--text-gray); font-size: 0.95rem; }
+        
+        .tag {
+            display: inline-block;
+            background: #f1f5f9;
+            color: #475569;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-top: 15px;
+            font-weight: 600;
+        }
+
+        /* --- 3. ANALYSE (PROS/CONS) --- */
+        .analysis-wrapper {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 50px;
+            margin-top: 20px;
+        }
+
+        .panel {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 40px;
+            box-shadow: var(--shadow);
+        }
+
+        .panel-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #eee;
+        }
+
+        /* Pros Style */
+        .pros-panel .panel-header { border-bottom-color: var(--success-color); }
+        .pros-panel .panel-header h2 { color: var(--success-color); margin: 0; }
+        .pros-panel .panel-header i { color: var(--success-color); font-size: 2rem; }
+
+        .pros-grid { display: grid; gap: 20px; }
+        .pro-item {
+            background: #fcfcfc;
+            padding: 20px;
+            border-left: 4px solid var(--success-color);
+            border-radius: 4px;
+        }
+        .pro-item strong { color: var(--text-dark); display: block; margin-bottom: 5px; }
+
+        /* Cons Style */
+        .cons-panel .panel-header { border-bottom-color: var(--warning-color); }
+        .cons-panel .panel-header h2 { color: var(--warning-color); margin: 0; }
+        .cons-panel .panel-header i { color: var(--warning-color); font-size: 2rem; }
+
+        .cons-grid { display: flex; flex-direction: column; gap: 25px; }
+        
+        .disclaimer {
+            background: var(--warning-bg);
+            color: #7b2d0e;
+            padding: 15px;
+            border-radius: var(--radius);
+            margin-bottom: 25px;
+            font-size: 0.9rem;
+            border-left: 4px solid var(--warning-color);
+        }
+
+        .con-item { display: flex; gap: 20px; }
+        .con-item i { color: var(--warning-color); margin-top: 5px; }
+        .con-content p { font-size: 0.95rem; color: var(--text-gray); }
+        .con-content ul { margin-left: 20px; margin-top: 10px; list-style: disc; color: var(--text-gray); }
+
+        /* --- 4. CONTACT --- */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .contact-item {
+            background: var(--light-blue);
+            padding: 30px 20px;
+            border-radius: var(--radius);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .contact-item:hover { transform: translateY(-5px); background: #e1effe; }
+
+        .contact-item i {
+            font-size: 2.5rem;
+            color: var(--primary-blue);
+            margin-bottom: 15px;
+        }
+        
+        .contact-item h3 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--dark-blue);
+        }
+        
+        .contact-item p, .contact-item a {
+            color: var(--text-gray);
+            font-size: 1rem;
+        }
+        
+        .contact-item a:hover { color: var(--primary-blue); text-decoration: underline; }
+
+        /* --- FOOTER --- */
+        footer {
+            background: var(--dark-blue);
+            color: rgba(255,255,255,0.8);
+            padding: 40px 0;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .stats-row { flex-direction: column; gap: 20px; }
+            .panel { padding: 25px; }
+            .con-item { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVIGATION -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i> Orientation UM5R
+            </div>
+            <nav>
+                <a href="#description" class="nav-link">Description</a>
+                <a href="#filieres" class="nav-link">Filières</a>
+                <a href="#analyse" class="nav-link">Analyse</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="container">
+            <h1>Université Mohammed V de Rabat</h1>
+            <p>Le guide complet pour comprendre l'offre, les forces et les limites de la première université moderne du Maroc.</p>
+            <a href="#description" class="btn-hero">Découvrir l'université</a>
+        </div>
+    </section>
+
+    <!-- 1. DESCRIPTION -->
+    <section id="description" class="section-padding">
+        <div class="container">
+            <div class="section-header">
+                <h2>Description de l'Université</h2>
+                <div class="separator"></div>
+            </div>
+            
+            <div class="desc-card">
+                <p class="desc-text">
+                    L'Université Mohammed V de Rabat (UM5R) est un établissement public d'enseignement supérieur et de recherche situé à Rabat. Fondée en 1957, elle est considérée comme la première université moderne du Maroc. Elle joue un rôle central dans la formation des élites du pays et dans la production scientifique nationale.
+                </p>
+                <p class="desc-text">
+                    L'université accueille une communauté étudiante massive et diversifiée, répartie sur plusieurs campus (notamment Agdal et Al Irfane). Elle fonctionne selon le système LMD (Licence, Master, Doctorat) et couvre un large spectre disciplinaire.
+                </p>
+                
+                <div class="stats-row">
+                    <div class="stat-box">
+                        <span class="stat-val">1957</span>
+                        <span class="stat-label">Année de fondation</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-val">~80 000</span>
+                        <span class="stat-label">Étudiants</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-val">19</span>
+                        <span class="stat-label">Établissements</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-val">Rabat</span>
+                        <span class="stat-label">Ville</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. FILIERES -->
+    <section id="filieres" class="section-padding" style="background-color: var(--light-blue);">
+        <div class="container">
+            <div class="section-header">
+                <h2>Les Filières et Domaines</h2>
+                <p>L'UM5R propose une offre de formation pluridisciplinaire structurée en grands domaines.</p>
+                <div class="separator"></div>
+            </div>
+
+            <div class="grid-filieres">
+                <!-- Sciences -->
+                <div class="filiere-card">
+                    <div class="f-icon"><i class="fas fa-flask"></i></div>
+                    <h3>Sciences & Techniques</h3>
+                    <p>Mathématiques, Physique, Chimie, Biologie, Géologie. Formation fondamentale et expérimentale.</p>
+                    <span class="tag">Faculté des Sciences</span>
+                </div>
+
+                <!-- Ingénierie -->
+                <div class="filiere-card">
+                    <div class="f-icon"><i class="fas fa-microchip"></i></div>
+                    <h3>Génie & Informatique</h3>
+                    <p>Informatique, Génie Civil, Industriel, Électrique. Formations d'ingénieurs au sein des écoles de l'université.</p>
+                    <span class="tag">Écoles d'Ingénieurs</span>
+                </div>
+
+                <!-- Santé -->
+                <div class="filiere-card">
+                    <div class="f-icon"><i class="fas fa-heartbeat"></i></div>
+                    <h3>Sciences Médicales</h3>
+                    <p>Médecine, Pharmacie, Médecine Dentaire. Formation longue et exigeante dans le domaine de la santé.</p>
+                    <span class="tag">Faculté de Médecine</span>
+                </div>
+
+                <!-- Droit Eco -->
+                <div class="filiere-card">
+                    <div class="f-icon"><i class="fas fa-scale-balanced"></i></div>
+                    <h3>Sciences Juridiques & Éco</h3>
+                    <p>Droit, Économie, Gestion. Préparation aux métiers du droit, de la finance et de l'administration.</p>
+                    <span class="tag">FSJES</span>
+                </div>
+
+                <!-- Lettres -->
+                <div class="filiere-card">
+                    <div class="f-icon"><i class="fas fa-book"></i></div>
+                    <h3>Lettres & SHS</h3>
+                    <p>Littérature, Langues, Histoire, Géographie, Sociologie. Études des civilisations et sciences humaines.</p>
+                    <span class="tag">Faculté des Lettres</span>
+                </div>
+
+                <!-- Education -->
+                <div class="filiere-card">
+                    <div class="f-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+                    <h3>Sciences de l'Éducation</h3>
+                    <p>Formation des enseignants et cadres pédagogiques. Pédagogie, didactique et inspection.</p>
+                    <span class="tag">ENS</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. ANALYSE AVANTAGES / DEFAUTS -->
+    <section id="analyse" class="section-padding">
+        <div class="container">
+            <div class="section-header">
+                <h2>Analyse : Avantages et Défauts</h2>
+                <p>Un bilan objectif pour vous aider dans votre choix.</p>
+                <div class="separator"></div>
+            </div>
+
+            <div class="analysis-wrapper">
+                
+                <!-- AVANTAGES -->
+                <div class="panel pros-panel">
+                    <div class="panel-header">
+                        <i class="fas fa-check-circle"></i>
+                        <h2>✅ Avantages (Forces)</h2>
+                    </div>
+                    <div class="pros-grid">
+                        <div class="pro-item">
+                            <strong>1. Classement national et international solide</strong>
+                            <p>UM5R est classée première université au Maroc et figure parmi les 4,7 %–4,9 % des meilleures universités mondiales selon le classement Center for World University Rankings (CWUR). Elle occupe aussi une position élevée au niveau arabe et africain.</p>
+                        </div>
+
+                        <div class="pro-item">
+                            <strong>2. Excellente performance en recherche</strong>
+                            <p>L’université se distingue sur l’indicateur de la qualité de la recherche, avec un rang mondial élevé et une forte production scientifique représentant une part importante des publications marocaines.</p>
+                        </div>
+
+                        <div class="pro-item">
+                            <strong>3. Visibilité et impact scientifique</strong>
+                            <p>Dans le classement Webometrics, UM5R se place en tête des universités marocaines et maghrébines, reflétant une bonne visibilité en ligne et diffusion des connaissances ainsi que l’impact de ses publications.</p>
+                        </div>
+
+                        <div class="pro-item">
+                            <strong>4. Reconnaissance continue dans les classements QS</strong>
+                            <p>L’université maintient sa position de leader national dans le classement QS World University Rankings, confirmant une reconnaissance académique répétée dans le temps.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DEFAUTS -->
+                <div class="panel cons-panel">
+                    <div class="panel-header">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h2>⚠️ Défauts (Limites)</h2>
+                    </div>
+
+                    <div class="disclaimer">
+                        <strong>Note importante :</strong> Les sources directes parlant d’avis négatifs ou de défauts précis pour l’UM5R sont limitées dans les médias officiels. Toutefois, certaines analyses générales du contexte de l’enseignement supérieur au Maroc permettent d’identifier des défis réputés que rencontre aussi l'UM5R.
+                    </div>
+
+                    <div class="cons-grid">
+                        <div class="con-item">
+                            <i class="fas fa-globe"></i>
+                            <div class="con-content">
+                                <strong>1. Position mondiale encore modeste</strong>
+                                <p>Malgré un bon classement national, l’université n’atteint pas encore les positions d’excellence mondiale (ex. hors top 1000 dans QS, située environ dans la zone 1201–1400). Cela montre que la compétition internationale reste difficile.</p>
+                            </div>
+                        </div>
+
+                        <div class="con-item">
+                            <i class="fas fa-university"></i>
+                            <div class="con-content">
+                                <strong>2. Défis structurels du système public</strong>
+                                <p>Dans le contexte général des universités publiques marocaines, plusieurs défis sont souvent identifiés :</p>
+                                <ul>
+                                    <li>Qualité d’enseignement jugée parfois insuffisante face à l’expansion des effectifs.</li>
+                                    <li>Faible taux d’enseignement en anglais ou internationalisation limitée.</li>
+                                    <li>Pressions sur les capacités physiques (logement, salles, laboratoires).</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="con-item">
+                            <i class="fas fa-balance-scale"></i>
+                            <div class="con-content">
+                                <strong>3. Limites des classements comme mesure de qualité pédagogique</strong>
+                                <p>Certains classements mettent surtout l’accent sur la recherche scientifique et la visibilité, ce qui ne reflète pas nécessairement la qualité pédagogique ou l’adaptation aux besoins du marché du travail.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. CONTACT -->
+    <section id="contact" class="section-padding" style="background-color: #fcfcfc;">
+        <div class="container">
+            <div class="section-header">
+                <h2>Contact & Informations</h2>
+                <p>Besoin de plus d'informations officielles ? Voici les coordonnées de l'université.</p>
+                <div class="separator"></div>
+            </div>
+
+            <div class="contact-grid">
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h3>Adresse</h3>
+                    <p>Avenue des Nations Unies, B.P. 8007<br>Rabat, Maroc</p>
+                </div>
+
+                <div class="contact-item">
+                    <i class="fas fa-phone-alt"></i>
+                    <h3>Téléphone</h3>
+                    <p>+212 0661-909378</p>
+                </div>
+
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <h3>Email</h3>
+                    <p>president@um5.ac.ma</p>
+                </div>
+
+                <div class="contact-item">
+                    <i class="fas fa-globe"></i>
+                    <h3>Site Web</h3>
+                    <a href="http://www.um5.ac.ma" target="_blank">www.um5.ac.ma</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <p>Guide d'orientation indépendant basé sur les données disponibles (CWUR, QS, Webometrics).</p>
+            <p style="margin-top: 10px; opacity: 0.6; font-size: 0.8rem;">&copy; 2025 Analyse UM5R</p>
+        </div>
+    </footer>
+        <!-- CHATBOT INTEGRATION -->
+    <script async type='module' src='https://interfaces.zapier.com/assets/web-components/zapier-interfaces/zapier-interfaces.esm.js'></script>
+    <zapier-interfaces-chatbot-embed is-popup='true' chatbot-id='cml6yl3ga000ciem38z0cx24k'></zapier-interfaces-chatbot-embed>
+
+</body>
+</html>
