@@ -1,0 +1,8 @@
+{
+    "name": "Test User 2",
+    "email": "testuser2@example.com",
+    "password": "password123",
+    "level": "TC",
+    "stream": "TC_Sc",
+    "phone": "0612345678"
+}

@@ -284,13 +284,14 @@ const app = {
         const password = document.getElementById('regPassword').value;
         const level = document.getElementById('regLevel').value;
         const stream = document.getElementById('regStream').value;
+        const phone = document.getElementById('regPhone').value;
 
         if (!name || !email || !password || !level) return showToast("Remplissez les champs obligatoires !", "error");
 
         fetch('/api/register', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name, email, password, level, stream })
+            body: JSON.stringify({ name, email, password, level, stream, phone })
         })
             .then(res => res.json())
             .then(data => {
@@ -322,6 +323,9 @@ const app = {
                 if (data.error) showToast(data.error, "error");
                 else {
                     showToast("Connecté !");
+                    if (data.user && data.user.isAdmin) {
+                        this.updateAdminUI(true);
+                    }
                     this.checkSession();
                 }
             })
@@ -336,6 +340,7 @@ const app = {
             fetch('/api/logout', { method: 'POST' })
                 .then(() => {
                     this.user = null;
+                    this.updateAdminUI(false);
                     this.navigate('auth');
                     showToast("Déconnexion réussie.");
                 })
@@ -358,7 +363,9 @@ const app = {
                     this.loadUser().then(() => {
                         console.log("User loaded, navigating to dashboard");
                         // Check if admin
-                        if (data.user && data.user.isAdmin) {
+                        const isAdmin = data.user && data.user.isAdmin;
+                        this.updateAdminUI(isAdmin);
+                        if (isAdmin) {
                             this.navigate('admin');
                         } else {
                             this.navigate('dashboard');
@@ -369,6 +376,7 @@ const app = {
                     });
                 } else {
                     console.log("Not authenticated, redirecting to auth");
+                    this.updateAdminUI(false);
                     this.navigate('auth');
                 }
             })
@@ -397,6 +405,17 @@ const app = {
             console.error("CRITICAL ERROR IN INIT:", error);
             showToast("Erreur critique au lancement : " + error.message, "error");
         }
+    },
+
+    updateAdminUI: function (isAdmin) {
+        const adminElements = document.querySelectorAll('.admin-only');
+        adminElements.forEach(el => {
+            el.style.display = isAdmin ? 'block' : 'none';
+            // Specific handling for mobile if needed (it uses flex in some containers)
+            if (el.id === 'adminStatsBtnMobile' && isAdmin) {
+                el.style.display = 'block';
+            }
+        });
     },
 
     processData: function () {
@@ -948,6 +967,7 @@ const app = {
                                 <th style="padding: 10px; text-align: left;">ID</th>
                                 <th style="padding: 10px; text-align: left;">Nom</th>
                                 <th style="padding: 10px; text-align: left;">Email</th>
+                                <th style="padding: 10px; text-align: left;">Téléphone</th>
                                 <th style="padding: 10px; text-align: left;">Niveau</th>
                                 <th style="padding: 10px; text-align: left;">Filière</th>
                                 <th style="padding: 10px; text-align: left;">Test RIASEC</th>
@@ -963,6 +983,7 @@ const app = {
                             <td style="padding: 10px; border-bottom: 1px solid #ddd;">${user.id}</td>
                             <td style="padding: 10px; border-bottom: 1px solid #ddd;">${user.name}</td>
                             <td style="padding: 10px; border-bottom: 1px solid #ddd;">${user.email}</td>
+                            <td style="padding: 10px; border-bottom: 1px solid #ddd;">${user.phone || 'Non renseigné'}</td>
                             <td style="padding: 10px; border-bottom: 1px solid #ddd;">${user.level}</td>
                             <td style="padding: 10px; border-bottom: 1px solid #ddd;">${user.stream}</td>
                             <td style="padding: 10px; border-bottom: 1px solid #ddd;">${user.quiz}</td>

@@ -48,15 +48,15 @@ const isAuthenticated = (req, res, next) => {
 
 // Register
 app.post('/api/register', async (req, res) => {
-    const { name, email, password, level, stream } = req.body;
+    const { name, email, password, level, stream, phone } = req.body;
     if (!name || !email || !password) {
         return res.status(400).json({ error: 'Tous les champs sont requis.' });
     }
 
     try {
         const hash = await bcrypt.hash(password, 10);
-        // Store technical level/stream in profile_data
-        const initialProfile = JSON.stringify({ level: level || "", stream: stream || "" });
+        // Store technical level/stream/phone in profile_data
+        const initialProfile = JSON.stringify({ level: level || "", stream: stream || "", phone: phone || "" });
 
         db.run('INSERT INTO users (name, email, password, profile_data) VALUES (?, ?, ?, ?)',
             [name, email, hash, initialProfile],
@@ -179,6 +179,7 @@ app.get('/api/admin/users', isAuthenticated, (req, res) => {
                     id: row.id,
                     name: row.name,
                     email: row.email,
+                    phone: profile.phone || 'Non renseigné',
                     level: profile.level || 'Non renseigné',
                     stream: profile.stream || 'Non renseigné',
                     quiz: profile.quiz ? (profile.quiz.codes + ' (' + profile.quiz.profiles.cognitif + ')') : 'Non passé'

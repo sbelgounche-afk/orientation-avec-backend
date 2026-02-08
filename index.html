@@ -41,6 +41,8 @@
                 <!-- Desktop Links -->
                 <div class="nav-links" id="navLinks">
                     <button onclick="window.app.navigate('dashboard')">Accueil</button>
+                    <button id="adminStatsBtn" class="admin-only" onclick="window.app.navigate('admin')"
+                        style="display:none;">Statistiques</button>
                     <button onclick="window.app.navigate('jobs')">Métiers</button>
                     <button onclick="window.app.navigate('comparator')">Comparateur</button>
                     <!-- Added Button -->
@@ -110,6 +112,9 @@
             </div>
         </div>
         <button onclick="window.app.navigate('dashboard'); window.app.toggleMenu()">🏠 Accueil</button>
+        <button id="adminStatsBtnMobile" class="admin-only"
+            onclick="window.app.navigate('admin'); window.app.toggleMenu()" style="display:none;">📊
+            Statistiques</button>
         <button onclick="window.app.navigate('jobs'); window.app.toggleMenu()">💼 Métiers</button>
         <button onclick="window.app.navigate('comparator'); window.app.toggleMenu()">⚖️ Comparateur</button>
         <button onclick="window.app.showStats(); window.app.toggleMenu()" style="color:var(--accent);">📊
@@ -191,6 +196,8 @@
                         <option value="Autre">Autre</option>
                     </select>
 
+                    <input type="tel" id="regPhone" placeholder="Téléphone (Optionnel)"
+                        style="width: 100%; margin-bottom: 10px; padding: 10px;">
                     <input type="password" id="regPassword" placeholder="Mot de passe"
                         style="width: 100%; margin-bottom: 10px; padding: 10px;">
                     <button class="btn btn-primary btn-block" onclick="window.app.register()">Créer un compte</button>
